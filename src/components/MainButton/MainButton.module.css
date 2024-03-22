@@ -27,12 +27,15 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: 40px;
+  filter: drop-shadow(0 0 0.75rem rgba(252, 231, 157, 0.9));
+  z-index: 10;
 }
 
 .active {
   background-color: #d6d6d6;
   transform: rotate(45deg);
   background-image: none;
+  filter: none;
 }
 
 .backPulse {
