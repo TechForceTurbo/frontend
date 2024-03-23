@@ -1,17 +1,17 @@
-import React from 'react';
-import styles from './MainButton.module.css';
+import React from 'react'
+import styles from './MainButton.module.css'
 
-import { useDispatch, useSelector } from 'react-redux';
-import { mainButton } from '@/store/mainButtonSlice';
-import { RootState } from '@/store/types';
+import { useDispatch, useSelector } from 'react-redux'
+import { mainButton } from '@/store/mainButtonSlice'
+import { RootState } from '@/store/types'
 
 const MainButton: React.FC = () => {
-  const isActive = useSelector((state: RootState) => state.mainButton.isActive);
-  const dispatch = useDispatch();
+  const isActive: boolean = useSelector((state: RootState) => state.mainButton.isActive)
+  const dispatch = useDispatch()
 
-  const handleClick = () => {
-    dispatch(mainButton());
-  };
+  const handleClick = (): void => {
+    dispatch(mainButton())
+  }
 
   return (
     <button
@@ -21,7 +21,7 @@ const MainButton: React.FC = () => {
     >
       <div className={!isActive ? styles.backPulse : ''}></div>
     </button>
-  );
-};
+  )
+}
 
-export default MainButton;
+export default MainButton
