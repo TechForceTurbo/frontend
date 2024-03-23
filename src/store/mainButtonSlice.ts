@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
 interface MainButtonState {
   isActive: boolean
@@ -6,17 +6,17 @@ interface MainButtonState {
 
 const initialState: MainButtonState = {
   isActive: false,
-}
+};
 
 const mainButtonSlice = createSlice({
   name: 'mainButton',
   initialState,
   reducers: {
     mainButton: (state: MainButtonState) => {
-      state.isActive = !state.isActive
+      state.isActive = !state.isActive;
     },
   },
-})
+});
 
-export const { mainButton } = mainButtonSlice.actions
-export default mainButtonSlice.reducer
+export const { mainButton } = mainButtonSlice.actions;
+export default mainButtonSlice.reducer;
