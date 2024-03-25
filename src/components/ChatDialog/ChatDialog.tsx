@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styles from './ChatDialog.module.css';
 import { Inter } from 'next/font/google';
 import { useDispatch, useSelector } from 'react-redux';
