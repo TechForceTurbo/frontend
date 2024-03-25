@@ -9,11 +9,11 @@
     "lint": "next lint",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier --write .",
-    "pre-commit": "npm format && npm run lint:fix"
+    "pre-commit": "npm run format && npm run lint:fix"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm format && npm run lint:fix"
+      "pre-commit": "npm run pre-commit"
     }
   },
   "dependencies": {
