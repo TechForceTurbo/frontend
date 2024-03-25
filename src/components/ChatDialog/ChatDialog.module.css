@@ -1,18 +1,30 @@
 .dialog {
-  margin-right: 7%;
-  margin-left: auto;
+  margin: 20px;
   padding: 10px;
+
+  min-height: 200px;
+  min-width: 150px;
   max-height: 70dvh;
   max-width: 70dvw;
+
+  height: 40dvh;
+  width: 40dvw;
+
   display: flex;
   flex-direction: column;
   border: none;
   filter: drop-shadow(0 0 0.75rem rgba(0, 0, 0, 0.15));
   border-radius: 10px;
   position: fixed;
-  bottom: 20%;
+  bottom: 18%;
+  right: 5%;
   z-index: 20;
   background-color: rgba(247, 218, 112, 0.5);
+  
+}
+
+.buttonsBox {
+  display: flex;
 }
 
 .closeButton {
@@ -24,6 +36,7 @@
   position: relative;
   background: none;
   cursor: pointer;
+  display: block;
 }
 
 .closeButton:before,
@@ -52,20 +65,21 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  margin-top: auto;
 }
 
 .area {
   font-size: 16px;
   border-radius: 5px;
   padding: 5px;
-  min-width: 200px;
-  max-width: 100%;
-  margin: 0 auto;
-  min-height: 70px;
-  max-height: 250px;
   border: 2px solid #ccc;
   box-sizing: border-box;
-}
+  max-height: 130px;
+  min-height: 40px;
+  font-weight: 300;
+  resize: vertical;
+} 
 
 .area::placeholder {
   color: #aaa;
@@ -76,9 +90,12 @@
 }
 
 .sendButton {
-  padding: 5px;
+  padding: 10px;
   border-radius: 5px;
   border: none;
+  background-color: rgba(184, 135, 11, 0.8);
+  color: rgb(245, 245, 245);
+  letter-spacing: 2px;
 }
 
 .sendButton:hover {
@@ -88,4 +105,23 @@
 .sendButton:active {
   position: relative;
   top: 3px;
+}
+
+.resizeButton {
+  width: 15px;
+  height: 15px;
+  display: block;
+  border: none;
+  margin-top: 3px;
+  margin-bottom: 10px;
+  background: none;
+  background-image: url('../../images/resize.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: move;
+  opacity: .3;
+}
+
+.resizeButton:hover {
+  opacity: .6;
 }
