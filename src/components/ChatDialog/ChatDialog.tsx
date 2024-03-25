@@ -4,15 +4,15 @@ import { Inter } from 'next/font/google';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { closeDialog } from '@/store/dialogSlice';
+import { updateMessage } from '@/store/messageSlice';
+import Messages from '../Messages/Messages';
 const inter = Inter({ subsets: ['latin'] });
 
 const ChatDialog: React.FC = () => {
   const isOpen: boolean = useSelector((state: RootState) => state.dialog.isOpen);
+  const message = useSelector((state: RootState) => state.message.message);
   const dispatch = useDispatch();
   const blockRef = useRef<HTMLDivElement>(null);
-
-  // Добавить в редакс
-  const [message, setMessage] = useState<string>('');
 
   const handleMouseDown = (
     event: React.MouseEvent<HTMLButtonElement> | React.TouchEvent<HTMLButtonElement>,
@@ -56,23 +56,25 @@ const ChatDialog: React.FC = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-    setMessage(e.target.value);
+    dispatch(updateMessage(e.target.value));
   };
 
+  // объединить
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       // dispatch(sendMessage(message))
-      setMessage('');
+      dispatch(updateMessage(''));
     }
   };
   const handleSendMessage = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     if (message.trim() !== '') {
       // dispatch(sendMessage(message))
-      setMessage('');
+      dispatch(updateMessage(''));
     }
   };
+  // ====
 
   const handleCloseDialog = (): void => {
     dispatch(closeDialog());
@@ -107,9 +109,8 @@ const ChatDialog: React.FC = () => {
             />
             <button type="button" onClick={handleCloseDialog} className={styles.closeButton} />
           </div>
-
+          <Messages />
           <form onSubmit={handleSendMessage} className={styles.form}>
-            {/* Отрисовка сообщений */}
             <textarea
               placeholder="Введите сообщение"
               className={`${styles.area} ${inter.className}`}

@@ -5,4 +5,7 @@ export interface RootState {
   dialog: {
     isOpen: boolean
   }
+  message: {
+    message: string
+  }
 }

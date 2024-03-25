@@ -2,8 +2,8 @@
   margin: 20px;
   padding: 10px;
 
-  min-height: 200px;
-  min-width: 150px;
+  min-height: 400px;
+  min-width: 250px;
   max-height: 70dvh;
   max-width: 70dvw;
 
@@ -63,8 +63,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-
+  gap: 5px;
   margin-top: auto;
 }
 
