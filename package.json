@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "npm run lint -- --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "pre-commit": "npm format && npm run lint:fix"
   },
   "husky": {
     "hooks": {
