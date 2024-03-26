@@ -14,6 +14,15 @@ const ChatDialog: React.FC = () => {
   const dispatch = useDispatch();
   const blockRef = useRef<HTMLDivElement>(null);
 
+  // в редакс
+  const [selectedFiles, setSelectedFiles] = React.useState<FileList | null>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    setSelectedFiles(files);
+  };
+  // =====
+
   const handleMouseDown = (
     event: React.MouseEvent<HTMLButtonElement> | React.TouchEvent<HTMLButtonElement>,
   ) => {
@@ -100,14 +109,20 @@ const ChatDialog: React.FC = () => {
     <>
       {isOpen && (
         <div className={styles.dialog} ref={blockRef}>
-          <div className={styles.buttonsBox}>
+          <div className={styles.topButtonsBox}>
             <button
               type="button"
               onMouseDown={handleMouseDown}
               onTouchStart={handleMouseDown}
               className={styles.resizeButton}
+              aria-label="изменить размеры окна"
             />
-            <button type="button" onClick={handleCloseDialog} className={styles.closeButton} />
+            <button
+              type="button"
+              onClick={handleCloseDialog}
+              className={styles.closeButton}
+              aria-label="закрыть окно чата"
+            />
           </div>
           <Messages />
           <form onSubmit={handleSendMessage} className={styles.form}>
@@ -118,9 +133,21 @@ const ChatDialog: React.FC = () => {
               onChange={handleChange}
               onKeyDown={handleKeyDown}
             />
-            <button type="submit" className={styles.sendButton}>
-              Отправить
-            </button>
+            <div className={styles.bottomButtonsBox}>
+              <label className={styles.attachmentLabel}>
+                <input
+                  type="file"
+                  className={styles.attachmentInput}
+                  aria-label="добавить вложение"
+                  onChange={handleFileChange}
+                  multiple
+                />
+              </label>
+
+              <button type="submit" className={styles.sendButton} aria-label="отправить сообщение">
+                Отправить
+              </button>
+            </div>
           </form>
         </div>
       )}
