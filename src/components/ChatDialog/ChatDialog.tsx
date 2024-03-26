@@ -6,23 +6,21 @@ import { RootState } from '@/store/types';
 import { closeDialog } from '@/store/dialogSlice';
 import { updateMessage } from '@/store/messageSlice';
 import Messages from '../Messages/Messages';
+import { setSelectedFiles } from '@/store/filesSlice';
 const inter = Inter({ subsets: ['latin'] });
 
 const ChatDialog: React.FC = () => {
   const isOpen: boolean = useSelector((state: RootState) => state.dialog.isOpen);
   const message = useSelector((state: RootState) => state.message.message);
+  const selectedFiles = useSelector((state: RootState) => state.file.selectedFiles);
   const dispatch = useDispatch();
   const blockRef = useRef<HTMLDivElement>(null);
 
-  // в редакс
-  const [selectedFiles, setSelectedFiles] = React.useState<FileList | null>(null);
-
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
-    setSelectedFiles(files);
+    dispatch(setSelectedFiles(files));
     console.log(selectedFiles);
   };
-  // =====
 
   const handleMouseDown = (
     event: React.MouseEvent<HTMLButtonElement> | React.TouchEvent<HTMLButtonElement>,
@@ -69,7 +67,6 @@ const ChatDialog: React.FC = () => {
     dispatch(updateMessage(e.target.value));
   };
 
-  // объединить
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -84,7 +81,6 @@ const ChatDialog: React.FC = () => {
       dispatch(updateMessage(''));
     }
   };
-  // ====
 
   const handleCloseDialog = (): void => {
     dispatch(closeDialog());

@@ -8,4 +8,7 @@ export interface RootState {
   message: {
     message: string
   }
+  file: {
+    selectedFiles: FileList | null
+  }
 }
