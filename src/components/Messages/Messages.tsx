@@ -12,3 +12,32 @@ const Messages: React.FC = () => {
 };
 
 export default Messages;
+
+// import React from 'react'
+// import MessageElement from '../MessageElement/MessageElement'
+// import styles from './Messages.module.css'
+// import { useSelector } from 'react-redux'
+// import { RootState } from '@/store/types'
+
+// const Messages: React.FC = () => {
+//   const messages = useSelector((state: RootState) => state.messages.items)
+
+//   return (
+//     <div className={styles.box}>
+//       {messages.length ? (
+//         messages.map(message => (
+//           <MessageElement
+//             key={Math.random()}
+//             user={message.user}
+//             text={message.text}
+//             time={message.time}
+//           />
+//         ))
+//       ) : (
+//         <p>Напишите своё первое сообщение</p>
+//       )}
+//     </div>
+//   )
+// }
+
+// export default Messages

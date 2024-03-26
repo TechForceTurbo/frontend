@@ -1,22 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface FileState {
-  selectedFiles: FileList | null
+  selectedFiles: FileList | undefined
 }
 
 const initialState: FileState = {
-  selectedFiles: null,
+  selectedFiles: undefined,
 };
 
 const fileSlice = createSlice({
   name: 'file',
   initialState,
   reducers: {
-    setSelectedFiles: (state, action: PayloadAction<FileList | null>) => {
+    setSelectedFiles: (state, action: PayloadAction<FileList | undefined>) => {
       state.selectedFiles = action.payload;
     },
     clearSelectedFiles: (state) => {
-      state.selectedFiles = null;
+      state.selectedFiles = undefined;
     },
   },
 });

@@ -1,3 +1,9 @@
+interface MessageItem {
+  user: boolean
+  text: string
+  time: string
+}
+
 export interface RootState {
   mainButton: {
     isActive: boolean
@@ -9,6 +15,9 @@ export interface RootState {
     message: string
   }
   file: {
-    selectedFiles: FileList | null
+    selectedFiles: FileList | undefined
+  }
+  messages: {
+    items: MessageItem[]
   }
 }

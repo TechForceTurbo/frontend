@@ -12,14 +12,14 @@ const inter = Inter({ subsets: ['latin'] });
 const ChatDialog: React.FC = () => {
   const isOpen: boolean = useSelector((state: RootState) => state.dialog.isOpen);
   const message = useSelector((state: RootState) => state.message.message);
-  const selectedFiles = useSelector((state: RootState) => state.file.selectedFiles);
+  // const selectedFiles = useSelector((state: RootState) => state.file.selectedFiles);
   const dispatch = useDispatch();
   const blockRef = useRef<HTMLDivElement>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
-    dispatch(setSelectedFiles(files));
-    console.log(selectedFiles);
+    dispatch(setSelectedFiles(files || undefined));
+    // console.log(selectedFiles);
   };
 
   const handleMouseDown = (
