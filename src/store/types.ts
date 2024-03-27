@@ -1,10 +1,4 @@
-interface MessageItem {
-  user: boolean
-  text: string
-  time: string
-}
-
-export interface RootState {
+export type RootState = {
   mainButton: {
     isActive: boolean
   }
@@ -14,10 +8,15 @@ export interface RootState {
   message: {
     message: string
   }
-  file: {
+  files: {
     selectedFiles: FileList | undefined
   }
-  messages: {
-    items: MessageItem[]
+  setMessages: {
+    items: {
+      user: boolean
+      isFile: boolean
+      text: string
+      time: string
+    }[]
   }
 }

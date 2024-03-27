@@ -3,15 +3,19 @@ import styles from './MessageElement.module.css';
 
 interface MessageProps {
   user: boolean
+  isFile: boolean
   text: string
   time: string
 }
 
-const MessageElement: React.FC<MessageProps> = ({ user, text, time }) => {
+const MessageElement: React.FC<MessageProps> = ({ user, isFile, text, time }) => {
   return (
-    <div className={`${styles.box} ${user && styles.usersMessage}`}>
+    <div className={`${styles.element} ${user && styles.usersMessage} `}>
       <p className={styles.name}>{user ? 'Вы' : 'Чат-бот'}</p>
-      <p className={styles.text}>{text}</p>
+      <div className={styles.messageBox}>
+        {isFile && <div className={styles.isFile}></div>}
+        <p className={styles.text}>{text}</p>
+      </div>
       <p className={styles.time}>{time}</p>
     </div>
   );

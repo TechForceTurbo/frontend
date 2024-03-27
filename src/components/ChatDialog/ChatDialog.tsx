@@ -1,26 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 import styles from './ChatDialog.module.css';
-import { Inter } from 'next/font/google';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { closeDialog } from '@/store/dialogSlice';
-import { updateMessage } from '@/store/messageSlice';
 import Messages from '../Messages/Messages';
-import { setSelectedFiles } from '@/store/filesSlice';
-const inter = Inter({ subsets: ['latin'] });
+import Form from '../Form/Form';
 
 const ChatDialog: React.FC = () => {
   const isOpen: boolean = useSelector((state: RootState) => state.dialog.isOpen);
-  const message = useSelector((state: RootState) => state.message.message);
-  // const selectedFiles = useSelector((state: RootState) => state.file.selectedFiles);
   const dispatch = useDispatch();
   const blockRef = useRef<HTMLDivElement>(null);
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    dispatch(setSelectedFiles(files || undefined));
-    // console.log(selectedFiles);
-  };
 
   const handleMouseDown = (
     event: React.MouseEvent<HTMLButtonElement> | React.TouchEvent<HTMLButtonElement>,
@@ -63,25 +52,6 @@ const ChatDialog: React.FC = () => {
     document.addEventListener('touchend', handleMouseUp);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-    dispatch(updateMessage(e.target.value));
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      // dispatch(sendMessage(message))
-      dispatch(updateMessage(''));
-    }
-  };
-  const handleSendMessage = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-    if (message.trim() !== '') {
-      // dispatch(sendMessage(message))
-      dispatch(updateMessage(''));
-    }
-  };
-
   const handleCloseDialog = (): void => {
     dispatch(closeDialog());
   };
@@ -122,30 +92,7 @@ const ChatDialog: React.FC = () => {
             />
           </div>
           <Messages />
-          <form onSubmit={handleSendMessage} className={styles.form}>
-            <textarea
-              placeholder="Введите сообщение"
-              className={`${styles.area} ${inter.className}`}
-              value={message}
-              onChange={handleChange}
-              onKeyDown={handleKeyDown}
-            />
-            <div className={styles.bottomButtonsBox}>
-              <label className={styles.attachmentLabel}>
-                <input
-                  type="file"
-                  className={styles.attachmentInput}
-                  aria-label="добавить вложение"
-                  onChange={handleFileChange}
-                  multiple
-                />
-              </label>
-
-              <button type="submit" className={styles.sendButton} aria-label="отправить сообщение">
-                Отправить
-              </button>
-            </div>
-          </form>
+          <Form />
         </div>
       )}
     </>

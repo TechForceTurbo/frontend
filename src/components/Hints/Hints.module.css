@@ -1,0 +1,26 @@
+.hintsList {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.hintButton {
+  padding: 6px;
+  border-radius: 15px;
+  font-size: 14px;
+  background-color: rgba(240, 230, 140, 0.9);
+  border: 3px solid rgb(185, 178, 115);
+  filter: drop-shadow(0 0 0.4rem rgba(0, 0, 0, 0.15));
+  cursor: pointer;
+}
+
+.hintButton:hover {
+  filter: drop-shadow(0 0 0.6rem rgb(185, 178, 115));
+}
+
+.hintButton:active {
+  position: relative;
+  top: 3px;
+}
