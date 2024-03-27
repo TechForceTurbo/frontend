@@ -5,10 +5,10 @@
   min-height: 400px;
   min-width: 250px;
   max-height: 70dvh;
-  max-width: 70dvw;
+  max-width: 80dvw;
 
-  height: 40dvh;
-  width: 40dvw;
+  height: 60dvh;
+  width: 50dvw;
 
   display: flex;
   flex-direction: column;
