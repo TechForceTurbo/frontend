@@ -1,22 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import styles from './ChatDialog.module.css';
-import { Inter } from 'next/font/google';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
 import { closeDialog } from '@/store/dialogSlice';
-const inter = Inter({ subsets: ['latin'] });
+import Messages from '../Messages/Messages';
+import Form from '../Form/Form';
 
 const ChatDialog: React.FC = () => {
   const isOpen: boolean = useSelector((state: RootState) => state.dialog.isOpen);
   const dispatch = useDispatch();
   const blockRef = useRef<HTMLDivElement>(null);
 
-  // Добавить в редакс
-  const [message, setMessage] = useState<string>('');
-
   const handleMouseDown = (
     event: React.MouseEvent<HTMLButtonElement> | React.TouchEvent<HTMLButtonElement>,
-  ) => {
+  ): void => {
     let startX: number, startY: number;
     if ('touches' in event) {
       startX = event.touches[0].clientX;
@@ -29,7 +26,7 @@ const ChatDialog: React.FC = () => {
     const startWidth = blockRef.current!.offsetWidth;
     const startHeight = blockRef.current!.offsetHeight;
 
-    const handleMouseMove = (moveEvent: MouseEvent | TouchEvent) => {
+    const handleMouseMove = (moveEvent: MouseEvent | TouchEvent): void => {
       const clientX = 'touches' in moveEvent ? moveEvent.touches[0].clientX : moveEvent.clientX;
       const clientY = 'touches' in moveEvent ? moveEvent.touches[0].clientY : moveEvent.clientY;
       const diffX = startX - clientX;
@@ -38,11 +35,13 @@ const ChatDialog: React.FC = () => {
       const newWidth = startWidth + diffX;
       const newHeight = startHeight + diffY;
 
-      blockRef.current!.style.width = `${newWidth}px`;
-      blockRef.current!.style.height = `${newHeight}px`;
+      if (blockRef.current) {
+        blockRef.current.style.width = `${newWidth}px`;
+        blockRef.current.style.height = `${newHeight}px`;
+      }
     };
 
-    const handleMouseUp = () => {
+    const handleMouseUp = (): void => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
       document.removeEventListener('touchmove', handleMouseMove);
@@ -54,29 +53,9 @@ const ChatDialog: React.FC = () => {
     document.addEventListener('touchmove', handleMouseMove);
     document.addEventListener('touchend', handleMouseUp);
   };
-
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-    setMessage(e.target.value);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      // dispatch(sendMessage(message))
-      setMessage('');
-    }
-  };
-  const handleSendMessage = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-    if (message.trim() !== '') {
-      // dispatch(sendMessage(message))
-      setMessage('');
-    }
-  };
-
-  const handleCloseDialog = (): void => {
+  const handleCloseDialog = useCallback((): void => {
     dispatch(closeDialog());
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent): void => {
@@ -92,35 +71,29 @@ const ChatDialog: React.FC = () => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isOpen]);
+  }, [isOpen, handleCloseDialog]);
 
   return (
     <>
       {isOpen && (
         <div className={styles.dialog} ref={blockRef}>
-          <div className={styles.buttonsBox}>
+          <div className={styles.topButtonsBox}>
             <button
               type="button"
               onMouseDown={handleMouseDown}
               onTouchStart={handleMouseDown}
               className={styles.resizeButton}
+              aria-label="изменить размеры окна"
             />
-            <button type="button" onClick={handleCloseDialog} className={styles.closeButton} />
+            <button
+              type="button"
+              onClick={handleCloseDialog}
+              className={styles.closeButton}
+              aria-label="закрыть окно чата"
+            />
           </div>
-
-          <form onSubmit={handleSendMessage} className={styles.form}>
-            {/* Отрисовка сообщений */}
-            <textarea
-              placeholder="Введите сообщение"
-              className={`${styles.area} ${inter.className}`}
-              value={message}
-              onChange={handleChange}
-              onKeyDown={handleKeyDown}
-            />
-            <button type="submit" className={styles.sendButton}>
-              Отправить
-            </button>
-          </form>
+          <Messages />
+          <Form />
         </div>
       )}
     </>

@@ -36,7 +36,7 @@ const MainMenu: React.FC = () => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isActive]);
+  }, [isActive, dispatch]);
 
   return (
     <>

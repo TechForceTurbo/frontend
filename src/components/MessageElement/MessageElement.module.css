@@ -1,0 +1,58 @@
+.element {
+  margin: 5px 0;
+  width: fit-content;
+  max-width: 65%;
+  background-color: burlywood;
+  border-radius: 10px;
+  padding: 10px 30px 10px 10px;
+}
+
+.usersMessage {
+  margin-left: auto;
+  text-align: end;
+  background-color: khaki;
+  padding: 10px 10px 10px 30px;
+}
+
+.name {
+  font-size: 10px;
+  font-weight: 500;
+  opacity: 0.7;
+  padding: 0 3px;
+}
+
+.time {
+  font-size: 10px;
+  font-weight: 400;
+  padding: 0 3px;
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.messageBox {
+  display: flex;
+}
+
+.text {
+  text-wrap: wrap;
+  word-wrap: break-word;
+  text-align: start;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.isFile {
+  width: 15px;
+  display: block;
+  height: 15px;
+  background-image: url('../../images/fileIcon.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 15px;
+  padding: 5px;
+  background-color: rgba(255, 251, 211, 0.5);
+  border-radius: 50%;
+  position: relative;
+  left: -15px;
+  margin: auto 0;
+}
