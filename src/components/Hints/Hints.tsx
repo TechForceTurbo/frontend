@@ -5,6 +5,7 @@ import { addMessage } from '@/store/setMessagesSlice';
 
 const Hints: React.FC = () => {
   const dispatch = useDispatch();
+
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
     const buttonText = (e.target as HTMLButtonElement).textContent;
     if (buttonText !== null) {

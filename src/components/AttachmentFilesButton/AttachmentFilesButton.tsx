@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import styles from './AttachmentFilesButton.module.css';
 import { useDispatch } from 'react-redux';
 import { setSelectedFiles } from '@/store/filesSlice';
@@ -7,7 +7,7 @@ import { addMessage } from '@/store/setMessagesSlice';
 const AttachmentFilesButton: React.FC = () => {
   const dispatch = useDispatch();
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     const fileNames = files ? Array.from(files).map((file) => file.name) : [];
     dispatch(setSelectedFiles(fileNames));

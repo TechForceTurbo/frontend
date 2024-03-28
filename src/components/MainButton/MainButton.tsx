@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './MainButton.module.css';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { mainButton } from '@/store/mainButtonSlice';
 import { RootState } from '@/store/types';

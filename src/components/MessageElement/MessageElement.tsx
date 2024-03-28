@@ -10,7 +10,7 @@ interface MessageProps {
 
 const MessageElement: React.FC<MessageProps> = ({ user, isFile, text, time }) => {
   return (
-    <div className={`${styles.element} ${user && styles.usersMessage} `}>
+    <div className={`${styles.element} ${user && styles.usersMessage}`}>
       <p className={styles.name}>{user ? 'Вы' : 'Чат-бот'}</p>
       <div className={styles.messageBox}>
         {isFile && <div className={styles.isFile}></div>}

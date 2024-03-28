@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import styles from './ChatDialog.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/store/types';
@@ -13,7 +13,7 @@ const ChatDialog: React.FC = () => {
 
   const handleMouseDown = (
     event: React.MouseEvent<HTMLButtonElement> | React.TouchEvent<HTMLButtonElement>,
-  ) => {
+  ): void => {
     let startX: number, startY: number;
     if ('touches' in event) {
       startX = event.touches[0].clientX;
@@ -26,7 +26,7 @@ const ChatDialog: React.FC = () => {
     const startWidth = blockRef.current!.offsetWidth;
     const startHeight = blockRef.current!.offsetHeight;
 
-    const handleMouseMove = (moveEvent: MouseEvent | TouchEvent) => {
+    const handleMouseMove = (moveEvent: MouseEvent | TouchEvent): void => {
       const clientX = 'touches' in moveEvent ? moveEvent.touches[0].clientX : moveEvent.clientX;
       const clientY = 'touches' in moveEvent ? moveEvent.touches[0].clientY : moveEvent.clientY;
       const diffX = startX - clientX;
@@ -35,11 +35,13 @@ const ChatDialog: React.FC = () => {
       const newWidth = startWidth + diffX;
       const newHeight = startHeight + diffY;
 
-      blockRef.current!.style.width = `${newWidth}px`;
-      blockRef.current!.style.height = `${newHeight}px`;
+      if (blockRef.current) {
+        blockRef.current.style.width = `${newWidth}px`;
+        blockRef.current.style.height = `${newHeight}px`;
+      }
     };
 
-    const handleMouseUp = () => {
+    const handleMouseUp = (): void => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
       document.removeEventListener('touchmove', handleMouseMove);
@@ -51,10 +53,9 @@ const ChatDialog: React.FC = () => {
     document.addEventListener('touchmove', handleMouseMove);
     document.addEventListener('touchend', handleMouseUp);
   };
-
-  const handleCloseDialog = (): void => {
+  const handleCloseDialog = useCallback((): void => {
     dispatch(closeDialog());
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent): void => {
@@ -70,7 +71,7 @@ const ChatDialog: React.FC = () => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isOpen]);
+  }, [isOpen, handleCloseDialog]);
 
   return (
     <>
