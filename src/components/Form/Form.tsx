@@ -7,10 +7,28 @@ import { updateMessage } from '@/store/messageSlice';
 import { addMessage } from '@/store/setMessagesSlice';
 import { RootState } from '@/store/types';
 import AttachmentFilesButton from '../AttachmentFilesButton/AttachmentFilesButton';
+import connectToSocket from '@/api/SocketComponent';
 
 const Form: React.FC = () => {
   const message = useSelector((state: RootState) => state.message.message);
   const dispatch = useDispatch();
+
+  // ====================
+
+  async function initSocketConnection() {
+    try {
+      const socket = await connectToSocket();
+      console.log('Socket connected:', socket);
+    } catch (error) {
+      console.error('Error connecting to socket:', error);
+    }
+  }
+
+  initSocketConnection();
+
+  // const socket = connectToSocket();
+
+  // ====================
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
     dispatch(updateMessage(e.target.value));
