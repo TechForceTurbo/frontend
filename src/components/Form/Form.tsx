@@ -3,11 +3,11 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 import styles from './Form.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateMessage } from '@/store/messageSlice';
-import { addMessage } from '@/store/setMessagesSlice';
-import { RootState } from '@/store/types';
+import { updateMessage } from '@/redux/reducers/messageSlice';
+import { addMessage } from '@/redux/reducers/setMessagesSlice';
+import { RootState } from '@/redux/types';
 import AttachmentFilesButton from '../AttachmentFilesButton/AttachmentFilesButton';
-import connectToSocket from '@/api/SocketComponent';
+import connectToSocket from '../../../utils/SocketComponent';
 
 const Form: React.FC = () => {
   const message = useSelector((state: RootState) => state.message.message);
@@ -15,18 +15,31 @@ const Form: React.FC = () => {
 
   // ====================
 
-  async function initSocketConnection() {
-    try {
-      const socket = await connectToSocket();
-      console.log('Socket connected:', socket);
-    } catch (error) {
-      console.error('Error connecting to socket:', error);
-    }
-  }
+  // async function initSocketConnection() {
+  //   try {
+  //     const socket = await connectToSocket();
+  //     console.log('Socket connected:', socket);
+  //   } catch (error) {
+  //     console.error('Error connecting to socket:', error);
+  //   }
+  // }
 
-  initSocketConnection();
+  // initSocketConnection();
 
   // const socket = connectToSocket();
+
+  React.useEffect(() => {
+    async function initSocketConnection() {
+      try {
+        const socket = await connectToSocket();
+        console.log('Socket connected:', socket);
+      } catch (error) {
+        console.error('Error connecting to socket:', error);
+      }
+    }
+
+    initSocketConnection();
+  }, []);
 
   // ====================
 

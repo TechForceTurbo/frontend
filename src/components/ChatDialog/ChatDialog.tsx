@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import styles from './ChatDialog.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/store/types';
-import { closeDialog } from '@/store/dialogSlice';
+import { RootState } from '@/redux/types';
+import { closeDialog } from '@/redux/reducers/dialogSlice';
 import Messages from '../Messages/Messages';
 import Form from '../Form/Form';
 

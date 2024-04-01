@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import mainButtonSlice from './mainButtonSlice';
-import dialogSlice from './dialogSlice';
-import messageSlice from './messageSlice';
-import filesSlice from './filesSlice';
-import setMessagesSlice from './setMessagesSlice';
+import mainButtonSlice from './reducers/mainButtonSlice';
+import dialogSlice from './reducers/dialogSlice';
+import messageSlice from './reducers/messageSlice';
+import filesSlice from './reducers/filesSlice';
+import setMessagesSlice from './reducers/setMessagesSlice';
 
 const store = configureStore({
   reducer: {

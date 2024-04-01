@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './MainButton.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { mainButton } from '@/store/mainButtonSlice';
-import { RootState } from '@/store/types';
-import { closeDialog } from '@/store/dialogSlice';
+import { mainButton } from '@/redux/reducers/mainButtonSlice';
+import { RootState } from '@/redux/types';
+import { closeDialog } from '@/redux/reducers/dialogSlice';
 
 const MainButton: React.FC = () => {
   const isActive: boolean = useSelector((state: RootState) => state.mainButton.isActive);

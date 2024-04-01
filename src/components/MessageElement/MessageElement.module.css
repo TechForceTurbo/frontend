@@ -45,7 +45,7 @@
   width: 15px;
   display: block;
   height: 15px;
-  background-image: url('../../images/fileIcon.svg');
+  background-image: url('../../../public/images/fileIcon.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 15px;

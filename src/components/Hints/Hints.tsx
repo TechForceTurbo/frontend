@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Hints.module.css';
 import { useDispatch } from 'react-redux';
-import { addMessage } from '@/store/setMessagesSlice';
+import { addMessage } from '@/redux/reducers/setMessagesSlice';
 
 const Hints: React.FC = () => {
   const dispatch = useDispatch();
