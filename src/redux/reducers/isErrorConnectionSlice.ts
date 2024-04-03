@@ -5,7 +5,7 @@ interface IsErrorConnectionState {
 }
 
 const initialState: IsErrorConnectionState = {
-  isError: false,
+  isError: true,
 };
 
 const isErrorConnectionSlice = createSlice({
@@ -15,8 +15,11 @@ const isErrorConnectionSlice = createSlice({
     isErrorConnection: (state: IsErrorConnectionState) => {
       state.isError = true;
     },
+    isNotErrorConnection: (state: IsErrorConnectionState) => {
+      state.isError = false;
+    },
   },
 });
 
-export const { isErrorConnection } = isErrorConnectionSlice.actions;
+export const { isErrorConnection, isNotErrorConnection } = isErrorConnectionSlice.actions;
 export default isErrorConnectionSlice.reducer;
