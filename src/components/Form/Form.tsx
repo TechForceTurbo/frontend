@@ -22,7 +22,6 @@ const Form: React.FC = () => {
     e: React.KeyboardEvent<HTMLTextAreaElement> | React.FormEvent<HTMLFormElement>,
   ): void => {
     e.preventDefault();
-
     if (!isError) {
       if (message.trim() !== '') {
         const currentTime = new Date();
