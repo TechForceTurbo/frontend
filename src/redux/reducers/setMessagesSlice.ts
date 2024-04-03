@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface Message {
   user: boolean
-  isFile: boolean
   text: string
   time: string
 }
@@ -22,8 +21,14 @@ const messagesSlice = createSlice({
     addMessage: (state, action: PayloadAction<Message>) => {
       state.items.push(action.payload);
     },
+    addMessagesFromHistory: (state, action: PayloadAction<Message[]>) => {
+      state.items.unshift(...action.payload);
+    },
+    clearSetMessages: (state) => {
+      state.items = [];
+    },
   },
 });
 
-export const { addMessage } = messagesSlice.actions;
+export const { addMessage, addMessagesFromHistory, clearSetMessages } = messagesSlice.actions;
 export default messagesSlice.reducer;

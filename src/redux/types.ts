@@ -14,7 +14,6 @@ export type RootState = {
   setMessages: {
     items: {
       user: boolean
-      isFile: boolean
       text: string
       time: string
     }[]

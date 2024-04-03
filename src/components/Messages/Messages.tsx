@@ -4,6 +4,7 @@ import styles from './Messages.module.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/types';
 import Hints from '../Hints/Hints';
+import getHistoryMessages from '@/utils/getHistoryMessages';
 
 const Messages: React.FC = () => {
   const messages = useSelector((state: RootState) => state.setMessages?.items);
@@ -15,13 +16,22 @@ const Messages: React.FC = () => {
     }
   }, [messages]);
 
+  useEffect(() => {
+    getHistoryMessages()
+      .then((data) => {
+        console.log('messages component', data);
+      })
+      .catch((error) => {
+        console.error('messages component, Ошибка при получении истории сообщений:', error.message);
+      });
+  }, []);
+
   return (
     <div className={styles.box}>
       {messages !== undefined && messages.length > 0 ? (
         messages.map((message) => (
           <MessageElement
             key={Math.random()}
-            isFile={message.isFile}
             user={message.user}
             text={message.text}
             time={message.time}

@@ -41,7 +41,7 @@
   width: 100%;
 }
 
-.isFile {
+/* .isFile {
   width: 15px;
   display: block;
   height: 15px;
@@ -55,4 +55,4 @@
   position: relative;
   left: -15px;
   margin: auto 0;
-}
+} */
