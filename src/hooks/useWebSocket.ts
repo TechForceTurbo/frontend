@@ -17,7 +17,7 @@ const useWebSocket = (url: string): WebSocket | null => {
     socketRef.current = new WebSocket(urlWithSessionId);
 
     socketRef.current.onopen = function () {
-      isNotErrorConnection();
+      dispatch(isNotErrorConnection());
       console.log('Соединение websocket установлено');
     };
 
