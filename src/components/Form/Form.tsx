@@ -10,6 +10,7 @@ import useWebSocket from '@/hooks/useWebSocket';
 
 const Form: React.FC = () => {
   const message = useSelector((state: RootState) => state.message.message);
+  const isError = useSelector((state: RootState) => state.isErrorConnection.isError);
   const dispatch = useDispatch();
   const socketRef = useWebSocket('wss://vink.ddns.net/ws/chat/');
 
@@ -21,13 +22,16 @@ const Form: React.FC = () => {
     e: React.KeyboardEvent<HTMLTextAreaElement> | React.FormEvent<HTMLFormElement>,
   ): void => {
     e.preventDefault();
-    if (message.trim() !== '') {
-      const currentTime = new Date();
-      const hours = currentTime.getHours();
-      const minutes = currentTime.getMinutes().toString().padStart(2, '0');
-      dispatch(addMessage({ user: true, text: message, time: `${hours}:${minutes}` }));
-      socketRef?.send(JSON.stringify({ message }));
-      dispatch(updateMessage(''));
+
+    if (!isError) {
+      if (message.trim() !== '') {
+        const currentTime = new Date();
+        const hours = currentTime.getHours();
+        const minutes = currentTime.getMinutes().toString().padStart(2, '0');
+        dispatch(addMessage({ user: true, text: message, time: `${hours}:${minutes}` }));
+        socketRef?.send(JSON.stringify({ message }));
+        dispatch(updateMessage(''));
+      }
     }
   };
 
@@ -51,7 +55,12 @@ const Form: React.FC = () => {
         onKeyDown={handleKeyDown}
       />
       <div className={styles.bottomButtonsBox}>
-        <button type="submit" className={styles.sendButton} aria-label="отправить сообщение">
+        <button
+          type="submit"
+          className={`${styles.sendButton} ${isError ? styles.inActiveButton : ''}`}
+          disabled={isError}
+          aria-label="Отправить сообщение"
+        >
           Отправить
         </button>
       </div>

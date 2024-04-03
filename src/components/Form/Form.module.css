@@ -49,3 +49,16 @@
   position: relative;
   top: 3px;
 }
+
+.inActiveButton {
+  background-color: #aaa;
+}
+
+.inActiveButton:active {
+  position: relative;
+  top: 0px;
+}
+
+.inActiveButton:hover {
+  filter: none;
+}

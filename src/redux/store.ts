@@ -4,6 +4,7 @@ import dialogSlice from './reducers/dialogSlice';
 import messageSlice from './reducers/messageSlice';
 import filesSlice from './reducers/filesSlice';
 import setMessagesSlice from './reducers/setMessagesSlice';
+import isErrorConnectionSlice from './reducers/isErrorConnectionSlice';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     message: messageSlice,
     files: filesSlice,
     setMessages: setMessagesSlice,
+    isErrorConnection: isErrorConnectionSlice,
   },
 });
 

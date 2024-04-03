@@ -8,6 +8,7 @@ import getHistoryMessages from '@/utils/getHistoryMessages';
 
 const Messages: React.FC = () => {
   const messages = useSelector((state: RootState) => state.setMessages?.items);
+  const isError = useSelector((state: RootState) => state.isErrorConnection.isError);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -39,8 +40,11 @@ const Messages: React.FC = () => {
         ))
       ) : (
         <div className={styles.noMessages}>
-          <p className={styles.noMessagesText}>Напишите своё первое сообщение</p>
-          <Hints />
+          <p className={styles.noMessagesText}>
+            {(isError && 'Не удалось установить соединение') ||
+              (!isError && 'Напишите своё первое сообщение')}
+          </p>
+          {!isError && <Hints />}
         </div>
       )}
       <div ref={messagesEndRef} />

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { addMessage } from '@/redux/reducers/setMessagesSlice';
+import { isErrorConnection } from '@/redux/reducers/isErrorConnectionSlice';
 
 const useWebSocket = (url: string): WebSocket | null => {
   const socketRef = useRef<WebSocket | null>(null);
@@ -42,6 +43,7 @@ const useWebSocket = (url: string): WebSocket | null => {
 
     socketRef.current.onerror = function (error) {
       console.error('Websocket component, WebSocket ошибка:', error);
+      dispatch(isErrorConnection());
     };
 
     socketRef.current.onclose = function (event) {

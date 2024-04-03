@@ -2,6 +2,9 @@ export type RootState = {
   mainButton: {
     isActive: boolean
   }
+  isErrorConnection: {
+    isError: boolean
+  }
   dialog: {
     isOpen: boolean
   }
