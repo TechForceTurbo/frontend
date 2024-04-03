@@ -1,7 +1,11 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { addMessage } from '@/redux/reducers/setMessagesSlice';
-import { isErrorConnection, isNotErrorConnection } from '@/redux/reducers/isErrorConnectionSlice';
+import {
+  isErrorConnection,
+  isNotErrorConnection,
+  setErrorMessage,
+} from '@/redux/reducers/isErrorConnectionSlice';
 
 const useWebSocket = (url: string): WebSocket | null => {
   const socketRef = useRef<WebSocket | null>(null);
@@ -45,6 +49,7 @@ const useWebSocket = (url: string): WebSocket | null => {
     socketRef.current.onerror = function (error) {
       console.error('Websocket component, WebSocket ошибка:', error);
       dispatch(isErrorConnection());
+      dispatch(setErrorMessage('Не удалось установить соединение'));
     };
 
     socketRef.current.onclose = function (event) {

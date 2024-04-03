@@ -4,6 +4,7 @@ export type RootState = {
   }
   isErrorConnection: {
     isError: boolean
+    errorMessage: string
   }
   dialog: {
     isOpen: boolean
