@@ -1,4 +1,4 @@
 .main {
-  min-height: 65vh;
+  flex-grow: 1;
   background-color: #f0f0f0;
 }
