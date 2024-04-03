@@ -13,7 +13,7 @@
 # Стек технологий
 
 <div> 
- <img src="https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white" alt="Next Bage"/>
+ <img src="https://img.shields.io/badge/next.js-%23404d59.svg?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next Badge" />
  <img src="https://img.shields.io/badge/TypeScript-%23404d59.svg?style=for-the-badge&logo=typescript&logoColor=blue" alt="TypeScript Badge" />
 <img src="https://img.shields.io/badge/javascript-%23404d59.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" alt="JavaScript Badge" />
 <img src="https://img.shields.io/badge/Redux-%23404d59.svg?style=for-the-badge&logo=Redux&logoColor=violet" alt="Redux Badge" /> 
