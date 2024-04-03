@@ -2,6 +2,9 @@ export type RootState = {
   mainButton: {
     isActive: boolean
   }
+  isErrorConnection: {
+    isError: boolean
+  }
   dialog: {
     isOpen: boolean
   }
@@ -14,7 +17,6 @@ export type RootState = {
   setMessages: {
     items: {
       user: boolean
-      isFile: boolean
       text: string
       time: string
     }[]

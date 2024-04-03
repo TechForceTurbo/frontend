@@ -4,9 +4,11 @@ import styles from './Messages.module.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/types';
 import Hints from '../Hints/Hints';
+import getHistoryMessages from '@/utils/getHistoryMessages';
 
 const Messages: React.FC = () => {
   const messages = useSelector((state: RootState) => state.setMessages?.items);
+  const isError = useSelector((state: RootState) => state.isErrorConnection.isError);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -15,13 +17,22 @@ const Messages: React.FC = () => {
     }
   }, [messages]);
 
+  useEffect(() => {
+    getHistoryMessages()
+      .then((data) => {
+        console.log('messages component', data);
+      })
+      .catch((error) => {
+        console.error('messages component, Ошибка при получении истории сообщений:', error.message);
+      });
+  }, []);
+
   return (
     <div className={styles.box}>
       {messages !== undefined && messages.length > 0 ? (
         messages.map((message) => (
           <MessageElement
             key={Math.random()}
-            isFile={message.isFile}
             user={message.user}
             text={message.text}
             time={message.time}
@@ -29,8 +40,11 @@ const Messages: React.FC = () => {
         ))
       ) : (
         <div className={styles.noMessages}>
-          <p className={styles.noMessagesText}>Напишите своё первое сообщение</p>
-          <Hints />
+          <p className={styles.noMessagesText}>
+            {(isError && 'Не удалось установить соединение') ||
+              (!isError && 'Напишите своё первое сообщение')}
+          </p>
+          {!isError && <Hints />}
         </div>
       )}
       <div ref={messagesEndRef} />

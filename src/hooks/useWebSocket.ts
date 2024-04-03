@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { addMessage } from '@/redux/reducers/setMessagesSlice';
+import { isErrorConnection } from '@/redux/reducers/isErrorConnectionSlice';
 
 const useWebSocket = (url: string): WebSocket | null => {
   const socketRef = useRef<WebSocket | null>(null);
@@ -12,36 +13,44 @@ const useWebSocket = (url: string): WebSocket | null => {
     socketRef.current = new WebSocket(urlWithSessionId);
 
     socketRef.current.onopen = function () {
-      console.log('[open] Соединение установлено');
+      console.log('Соединение websocket установлено');
     };
 
     socketRef.current.onmessage = function (event) {
-      const res = JSON.parse(event.data);
-      console.log(res);
+      try {
+        const res = JSON.parse(event.data);
+        console.log('websocket hook', res);
 
-      if (res.session_id) {
-        localStorage.setItem('session_id', res.session_id);
+        if (res.session_id) {
+          localStorage.setItem('session_id', res.session_id);
+        }
+        if (res.message) {
+          const currentTime = new Date();
+          const hours = currentTime.getHours();
+          const minutes = currentTime.getMinutes().toString().padStart(2, '0');
+          dispatch(
+            addMessage({
+              user: false,
+              text: res.message,
+              time: `${hours}:${minutes}`,
+            }),
+          );
+        }
+      } catch (error) {
+        console.error('Websocket component, Ошибка при обработке сообщения:', error);
       }
-      if (res.message) {
-        const currentTime = new Date();
-        const hours = currentTime.getHours();
-        const minutes = currentTime.getMinutes().toString().padStart(2, '0');
-        dispatch(
-          addMessage({
-            user: false,
-            isFile: false,
-            text: res.message,
-            time: `${hours}:${minutes}`,
-          }),
-        );
-      }
+    };
+
+    socketRef.current.onerror = function (error) {
+      console.error('Websocket component, WebSocket ошибка:', error);
+      dispatch(isErrorConnection());
     };
 
     socketRef.current.onclose = function (event) {
       if (event.wasClean) {
-        console.log(`[close] Соединение закрыто чисто, код=${event.code}`);
+        console.log(`Соединение websocket закрыто чисто, код=${event.code}`);
       } else {
-        console.log('[close] Соединение прервано');
+        console.log('Соединение websocket прервано');
       }
     };
 

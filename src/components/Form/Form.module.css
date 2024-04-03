@@ -32,7 +32,7 @@
 .sendButton {
   padding: 10px;
   border-radius: 5px;
-  margin-left: 15px;
+  /* margin-left: 15px; */
   width: 100%;
   border: none;
   background-color: rgba(184, 135, 11, 0.8);
@@ -48,4 +48,17 @@
 .sendButton:active {
   position: relative;
   top: 3px;
+}
+
+.inActiveButton {
+  background-color: #aaa;
+}
+
+.inActiveButton:active {
+  position: relative;
+  top: 0px;
+}
+
+.inActiveButton:hover {
+  filter: none;
 }

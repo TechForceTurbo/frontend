@@ -1,6 +1,6 @@
-import { FC } from 'react'
+import { FC } from 'react';
 
-import styles from './Header.module.css'
+import styles from './Header.module.css';
 
 const Header: FC = () => {
   return (
@@ -9,7 +9,7 @@ const Header: FC = () => {
         <a href="#" className={styles.logo} aria-label="mainpage"></a>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

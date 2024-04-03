@@ -17,7 +17,7 @@ const AttachmentFilesButton: React.FC = () => {
     const minutes = currentTime.getMinutes().toString().padStart(2, '0');
 
     fileNames.forEach((file) => {
-      dispatch(addMessage({ user: true, isFile: true, text: file, time: `${hours}:${minutes}` }));
+      dispatch(addMessage({ user: true, text: file, time: `${hours}:${minutes}` }));
     });
 
     // манипуляции с самим файлом

@@ -6,13 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateMessage } from '@/redux/reducers/messageSlice';
 import { addMessage } from '@/redux/reducers/setMessagesSlice';
 import { RootState } from '@/redux/types';
-import AttachmentFilesButton from '../AttachmentFilesButton/AttachmentFilesButton';
 import useWebSocket from '@/hooks/useWebSocket';
 
 const Form: React.FC = () => {
   const message = useSelector((state: RootState) => state.message.message);
+  const isError = useSelector((state: RootState) => state.isErrorConnection.isError);
   const dispatch = useDispatch();
-  const socketRef = useWebSocket('ws://91.210.170.43/ws/chat/');
+  const socketRef = useWebSocket('wss://vink.ddns.net/ws/chat/');
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
     dispatch(updateMessage(e.target.value));
@@ -22,15 +22,16 @@ const Form: React.FC = () => {
     e: React.KeyboardEvent<HTMLTextAreaElement> | React.FormEvent<HTMLFormElement>,
   ): void => {
     e.preventDefault();
-    if (message.trim() !== '') {
-      const currentTime = new Date();
-      const hours = currentTime.getHours();
-      const minutes = currentTime.getMinutes().toString().padStart(2, '0');
-      dispatch(
-        addMessage({ user: true, isFile: false, text: message, time: `${hours}:${minutes}` }),
-      );
-      socketRef?.send(JSON.stringify({ message }));
-      dispatch(updateMessage(''));
+
+    if (!isError) {
+      if (message.trim() !== '') {
+        const currentTime = new Date();
+        const hours = currentTime.getHours();
+        const minutes = currentTime.getMinutes().toString().padStart(2, '0');
+        dispatch(addMessage({ user: true, text: message, time: `${hours}:${minutes}` }));
+        socketRef?.send(JSON.stringify({ message }));
+        dispatch(updateMessage(''));
+      }
     }
   };
 
@@ -54,8 +55,12 @@ const Form: React.FC = () => {
         onKeyDown={handleKeyDown}
       />
       <div className={styles.bottomButtonsBox}>
-        <AttachmentFilesButton />
-        <button type="submit" className={styles.sendButton} aria-label="отправить сообщение">
+        <button
+          type="submit"
+          className={`${styles.sendButton} ${isError ? styles.inActiveButton : ''}`}
+          disabled={isError}
+          aria-label="Отправить сообщение"
+        >
           Отправить
         </button>
       </div>
