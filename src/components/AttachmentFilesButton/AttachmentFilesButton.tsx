@@ -1,8 +1,8 @@
 import React, { ChangeEvent } from 'react';
 import styles from './AttachmentFilesButton.module.css';
 import { useDispatch } from 'react-redux';
-import { setSelectedFiles } from '@/store/filesSlice';
-import { addMessage } from '@/store/setMessagesSlice';
+import { setSelectedFiles } from '@/redux/reducers/filesSlice';
+import { addMessage } from '@/redux/reducers/setMessagesSlice';
 
 const AttachmentFilesButton: React.FC = () => {
   const dispatch = useDispatch();

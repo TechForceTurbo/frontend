@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import MessageElement from '../MessageElement/MessageElement';
 import styles from './Messages.module.css';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/store/types';
+import { RootState } from '@/redux/types';
 import Hints from '../Hints/Hints';
 
 const Messages: React.FC = () => {

@@ -68,7 +68,7 @@
   margin-top: 3px;
   margin-bottom: 10px;
   background: none;
-  background-image: url('../../images/resize.svg');
+  background-image: url('../../../public/images/resize.svg');
   background-size: contain;
   background-repeat: no-repeat;
   cursor: move;

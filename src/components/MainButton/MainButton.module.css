@@ -23,7 +23,7 @@
   background-color: #ffd132;
   border: none;
   transition: transform 0.3s ease;
-  background-image: url('../../images/bubbles.svg');
+  background-image: url('../../../public/images/bubbles.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 40px;

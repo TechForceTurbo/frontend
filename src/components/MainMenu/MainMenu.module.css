@@ -35,16 +35,16 @@
 }
 
 .tg {
-  background-image: url('../../images/telegram.svg');
+  background-image: url('../../../public/images/telegram.svg');
   background-size: 64px;
 }
 
 .wa {
-  background-image: url('../../images/whatsapp.svg');
+  background-image: url('../../../public/images/whatsapp.svg');
 }
 
 .chat {
-  background-image: url('../../images/bubbles.svg');
+  background-image: url('../../../public/images/bubbles.svg');
 }
 
 @keyframes slideIn {

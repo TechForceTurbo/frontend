@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Hints.module.css';
 import { useDispatch } from 'react-redux';
-import { addMessage } from '@/store/setMessagesSlice';
+import { updateMessage } from '@/redux/reducers/messageSlice';
 
 const Hints: React.FC = () => {
   const dispatch = useDispatch();
@@ -9,12 +9,7 @@ const Hints: React.FC = () => {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
     const buttonText = (e.target as HTMLButtonElement).textContent;
     if (buttonText !== null) {
-      const currentTime = new Date();
-      const hours = currentTime.getHours();
-      const minutes = currentTime.getMinutes().toString().padStart(2, '0');
-      dispatch(
-        addMessage({ user: true, isFile: false, text: buttonText, time: `${hours}:${minutes}` }),
-      );
+      dispatch(updateMessage(buttonText));
     }
   };
 
