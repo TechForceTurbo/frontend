@@ -1,4 +1,4 @@
-export type RootState = {
+export interface RootState {
   mainButton: {
     isActive: boolean
   }

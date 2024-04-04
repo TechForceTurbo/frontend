@@ -16,12 +16,12 @@ const useWebSocket = (url: string): WebSocket | null => {
     const urlWithSessionId = session_id ? `${url}?session_id=${session_id}` : url;
     socketRef.current = new WebSocket(urlWithSessionId);
 
-    socketRef.current.onopen = function () {
+    socketRef.current.onopen = () => {
       dispatch(isNotErrorConnection());
       console.log('Соединение websocket установлено');
     };
 
-    socketRef.current.onmessage = function (event) {
+    socketRef.current.onmessage = (event) => {
       try {
         const res = JSON.parse(event.data);
         console.log('websocket hook', res);
@@ -46,13 +46,13 @@ const useWebSocket = (url: string): WebSocket | null => {
       }
     };
 
-    socketRef.current.onerror = function (error) {
+    socketRef.current.onerror = (error) => {
       console.error('Websocket component, WebSocket ошибка:', error);
       dispatch(isErrorConnection());
       dispatch(setErrorMessage('Не удалось установить соединение'));
     };
 
-    socketRef.current.onclose = function (event) {
+    socketRef.current.onclose = (event) => {
       if (event.wasClean) {
         console.log(`Соединение websocket закрыто чисто, код=${event.code}`);
       } else {

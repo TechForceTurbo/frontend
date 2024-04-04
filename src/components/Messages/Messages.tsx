@@ -1,16 +1,18 @@
-import React, { useEffect, useRef } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import MessageElement from '../MessageElement/MessageElement';
 import styles from './Messages.module.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/types';
 import Hints from '../Hints/Hints';
 import getHistoryMessages from '@/utils/getHistoryMessages';
+import { addMessagesFromHistory, clearSetMessages } from '@/redux/reducers/setMessagesSlice';
 
-const Messages: React.FC = () => {
+const Messages: FC = () => {
   const messages = useSelector((state: RootState) => state.setMessages?.items);
   const isError = useSelector((state: RootState) => state.isErrorConnection.isError);
   const textError = useSelector((state: RootState) => state.isErrorConnection.errorMessage);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -22,11 +24,16 @@ const Messages: React.FC = () => {
     getHistoryMessages()
       .then((data) => {
         console.log('messages component', data);
+        dispatch(addMessagesFromHistory(data.results));
       })
-      .catch((error) => {
+      .catch((error: Error) => {
         console.error('messages component, Ошибка при получении истории сообщений:', error.message);
       });
-  }, []);
+
+    return () => {
+      dispatch(clearSetMessages());
+    };
+  }, [dispatch]);
 
   return (
     <div className={styles.box}>

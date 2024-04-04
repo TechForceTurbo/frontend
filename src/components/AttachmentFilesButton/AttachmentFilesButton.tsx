@@ -9,7 +9,9 @@ const AttachmentFilesButton: React.FC = () => {
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
-    const fileNames = files ? Array.from(files).map((file) => file.name) : [];
+    if (!files) return;
+
+    const fileNames: string[] = Array.from(files).map((file) => file.name);
     dispatch(setSelectedFiles(fileNames));
 
     const currentTime = new Date();

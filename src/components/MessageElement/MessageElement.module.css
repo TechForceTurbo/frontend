@@ -41,6 +41,11 @@
   width: 100%;
 }
 
+.usersText {
+  width: fit-content;
+  margin-left: auto;
+}
+
 /* .isFile {
   width: 15px;
   display: block;

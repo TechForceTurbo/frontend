@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, ChangeEvent, KeyboardEvent, FormEvent } from 'react';
 import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 import styles from './Form.module.css';
@@ -8,18 +8,18 @@ import { addMessage } from '@/redux/reducers/setMessagesSlice';
 import { RootState } from '@/redux/types';
 import useWebSocket from '@/hooks/useWebSocket';
 
-const Form: React.FC = () => {
+const Form: FC = () => {
   const message = useSelector((state: RootState) => state.message.message);
   const isError = useSelector((state: RootState) => state.isErrorConnection.isError);
   const dispatch = useDispatch();
   const socketRef = useWebSocket('wss://vink.ragimov700.ru/ws/chat/');
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
     dispatch(updateMessage(e.target.value));
   };
 
   const handleSendMessageAndKeyDown = (
-    e: React.KeyboardEvent<HTMLTextAreaElement> | React.FormEvent<HTMLFormElement>,
+    e: KeyboardEvent<HTMLTextAreaElement> | FormEvent<HTMLFormElement>,
   ): void => {
     e.preventDefault();
     if (!isError) {
@@ -34,13 +34,13 @@ const Form: React.FC = () => {
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>): void => {
     if (e.key === 'Enter' && !e.shiftKey) {
       handleSendMessageAndKeyDown(e);
     }
   };
 
-  const handleSendMessage = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleSendMessage = (e: FormEvent<HTMLFormElement>): void => {
     handleSendMessageAndKeyDown(e);
   };
 
