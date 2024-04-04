@@ -5,7 +5,7 @@ async function getHistoryMessages(): Promise<any> {
     return;
   }
 
-  const url = `https://vink.ddns.net/api/chat-history/${session_id}`;
+  const url = `https://vink.ragimov700.ru/api/chat-history/${session_id}`;
 
   try {
     const response = await fetch(url);

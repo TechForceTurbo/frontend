@@ -12,7 +12,7 @@ const Form: React.FC = () => {
   const message = useSelector((state: RootState) => state.message.message);
   const isError = useSelector((state: RootState) => state.isErrorConnection.isError);
   const dispatch = useDispatch();
-  const socketRef = useWebSocket('wss://vink.ddns.net/ws/chat/');
+  const socketRef = useWebSocket('wss://vink.ragimov700.ru/ws/chat/');
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
     dispatch(updateMessage(e.target.value));
