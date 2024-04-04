@@ -1,5 +1,5 @@
-import React, { FC } from 'react'
-import styles from './Advertisement.module.css'
+import React, { FC } from 'react';
+import styles from './Advertisement.module.css';
 
 const Advertisement: FC = () => {
   return (
@@ -16,7 +16,7 @@ const Advertisement: FC = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Advertisement
+export default Advertisement;
