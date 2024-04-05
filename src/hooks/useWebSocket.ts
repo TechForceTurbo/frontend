@@ -6,7 +6,7 @@ import {
   isNotErrorConnection,
   setErrorMessage,
 } from '@/redux/reducers/isErrorConnectionSlice';
-import { decrementMessages } from '@/redux/reducers/unansweredMessagesSlice';
+import { decrementMessages, resetMessages } from '@/redux/reducers/unansweredMessagesSlice';
 
 const useWebSocket = (url: string): WebSocket | null => {
   const socketRef = useRef<WebSocket | null>(null);
@@ -67,6 +67,7 @@ const useWebSocket = (url: string): WebSocket | null => {
     return () => {
       if (socketRef.current) {
         socketRef.current.close();
+        dispatch(resetMessages());
       }
     };
   }, [url, dispatch]);

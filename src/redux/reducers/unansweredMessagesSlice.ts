@@ -18,10 +18,14 @@ const unansweredMessagesSlice = createSlice({
     decrementMessages: (state) => {
       state.count--;
     },
+    resetMessages: (state) => {
+      state.count = 0;
+    },
   },
 });
 
-export const { incrementMessages, decrementMessages } = unansweredMessagesSlice.actions;
+export const { incrementMessages, decrementMessages, resetMessages } =
+  unansweredMessagesSlice.actions;
 
 export const selectUnansweredMessageCount = (state: {
   unansweredMessages: UnansweredMessagesState
