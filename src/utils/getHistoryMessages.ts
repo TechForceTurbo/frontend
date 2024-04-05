@@ -24,4 +24,19 @@ async function getHistoryMessages(): Promise<any> {
   }
 }
 
+export async function getPreviousMessages(url: string): Promise<any> {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('Ошибка получения истории чата');
+    }
+    const data = await response.json();
+    console.log('history component, Получены предыдущие компоненты:', data);
+    return data;
+  } catch (error) {
+    console.error('history component, Произошла ошибка:', (error as Error).message);
+    throw error;
+  }
+}
+
 export default getHistoryMessages;
