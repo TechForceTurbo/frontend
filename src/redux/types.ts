@@ -20,6 +20,7 @@ export interface RootState {
       user: boolean
       text: string
       time: string
+      isDelivered?: boolean
     }[]
   }
 }

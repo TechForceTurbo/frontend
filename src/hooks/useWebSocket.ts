@@ -6,6 +6,7 @@ import {
   isNotErrorConnection,
   setErrorMessage,
 } from '@/redux/reducers/isErrorConnectionSlice';
+import { decrementMessages } from '@/redux/reducers/unansweredMessagesSlice';
 
 const useWebSocket = (url: string): WebSocket | null => {
   const socketRef = useRef<WebSocket | null>(null);
@@ -40,6 +41,7 @@ const useWebSocket = (url: string): WebSocket | null => {
               time: `${hours}:${minutes}`,
             }),
           );
+          dispatch(decrementMessages());
         }
       } catch (error) {
         console.error('Websocket component, Ошибка при обработке сообщения:', error);
@@ -53,6 +55,8 @@ const useWebSocket = (url: string): WebSocket | null => {
     };
 
     socketRef.current.onclose = (event) => {
+      dispatch(isErrorConnection());
+      dispatch(setErrorMessage('Соединение прервано'));
       if (event.wasClean) {
         console.log(`Соединение websocket закрыто чисто, код=${event.code}`);
       } else {

@@ -7,6 +7,8 @@ import { updateMessage } from '@/redux/reducers/messageSlice';
 import { addMessage } from '@/redux/reducers/setMessagesSlice';
 import { RootState } from '@/redux/types';
 import useWebSocket from '@/hooks/useWebSocket';
+import { isErrorConnection, setErrorMessage } from '@/redux/reducers/isErrorConnectionSlice';
+import { incrementMessages } from '@/redux/reducers/unansweredMessagesSlice';
 
 const Form: FC = () => {
   const message = useSelector((state: RootState) => state.message.message);
@@ -18,18 +20,32 @@ const Form: FC = () => {
     dispatch(updateMessage(e.target.value));
   };
 
-  const handleSendMessageAndKeyDown = (
+  const handleSendMessageAndKeyDown = async (
     e: KeyboardEvent<HTMLTextAreaElement> | FormEvent<HTMLFormElement>,
-  ): void => {
+  ): Promise<void> => {
     e.preventDefault();
     if (!isError) {
       if (message.trim() !== '') {
-        const currentTime = new Date();
-        const hours = currentTime.getHours();
-        const minutes = currentTime.getMinutes().toString().padStart(2, '0');
-        dispatch(addMessage({ user: true, text: message, time: `${hours}:${minutes}` }));
-        socketRef?.send(JSON.stringify({ message }));
-        dispatch(updateMessage(''));
+        try {
+          await socketRef?.send(JSON.stringify({ message }));
+          const currentTime = new Date();
+          const hours = currentTime.getHours();
+          const minutes = currentTime.getMinutes().toString().padStart(2, '0');
+
+          dispatch(
+            addMessage({
+              user: true,
+              text: message,
+              time: `${hours}:${minutes}`,
+              isDelivered: true,
+            }),
+          );
+          dispatch(updateMessage(''));
+          dispatch(incrementMessages());
+        } catch (error) {
+          dispatch(isErrorConnection());
+          dispatch(setErrorMessage('Перезагрузите страницу'));
+        }
       }
     }
   };

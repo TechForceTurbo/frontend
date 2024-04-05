@@ -5,6 +5,7 @@ import messageReducer from './reducers/messageSlice';
 import filesReducer from './reducers/filesSlice';
 import setMessagesReducer from './reducers/setMessagesSlice';
 import isErrorConnectionReducer from './reducers/isErrorConnectionSlice';
+import unansweredMessagesReducer from './reducers/unansweredMessagesSlice';
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     files: filesReducer,
     setMessages: setMessagesReducer,
     isErrorConnection: isErrorConnectionReducer,
+    unansweredMessages: unansweredMessagesReducer,
   },
 });
 

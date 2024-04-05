@@ -6,11 +6,14 @@ import { RootState } from '@/redux/types';
 import Hints from '../Hints/Hints';
 import getHistoryMessages from '@/utils/getHistoryMessages';
 import { addMessagesFromHistory, clearSetMessages } from '@/redux/reducers/setMessagesSlice';
+import TypingInformation from '../TypingInfomation/TypingInfomation';
+import { selectUnansweredMessageCount } from '@/redux/reducers/unansweredMessagesSlice';
 
 const Messages: FC = () => {
   const messages = useSelector((state: RootState) => state.setMessages?.items);
   const isError = useSelector((state: RootState) => state.isErrorConnection.isError);
   const textError = useSelector((state: RootState) => state.isErrorConnection.errorMessage);
+  const unansweredMessageCount = useSelector(selectUnansweredMessageCount);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
 
@@ -44,6 +47,7 @@ const Messages: FC = () => {
             user={message.user}
             text={message.text}
             time={message.time}
+            isDelivered={message.isDelivered ? message.isDelivered : false}
           />
         ))
       ) : (
@@ -54,6 +58,7 @@ const Messages: FC = () => {
           {!isError && <Hints />}
         </div>
       )}
+      {unansweredMessageCount !== 0 && <TypingInformation />}
       <div ref={messagesEndRef} />
     </div>
   );
