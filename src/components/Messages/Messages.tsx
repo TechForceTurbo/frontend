@@ -26,8 +26,10 @@ const Messages: FC = () => {
   const handleReceivedMessagesData = useCallback(
     (data: any) => {
       dispatch(addMessagesFromHistory(data.results));
-      if (data.next.includes('http://')) {
-        data.next = data.next.replace('http://', 'https://');
+      if (data.next !== null) {
+        if (data.next.includes('http://')) {
+          data.next = data.next.replace('http://', 'https://');
+        }
       }
       setNextPageLink(data.next);
     },

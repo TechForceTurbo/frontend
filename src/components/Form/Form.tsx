@@ -13,6 +13,7 @@ import { incrementMessages } from '@/redux/reducers/unansweredMessagesSlice';
 const Form: FC = () => {
   const message = useSelector((state: RootState) => state.message.message);
   const isError = useSelector((state: RootState) => state.isErrorConnection.isError);
+  const messages = useSelector((state: RootState) => state.setMessages?.items);
   const dispatch = useDispatch();
   const socketRef = useWebSocket('wss://vink.ragimov700.ru/ws/chat/');
 
@@ -31,7 +32,6 @@ const Form: FC = () => {
           const currentTime = new Date();
           const hours = currentTime.getHours();
           const minutes = currentTime.getMinutes().toString().padStart(2, '0');
-
           dispatch(
             addMessage({
               user: true,
@@ -41,7 +41,13 @@ const Form: FC = () => {
             }),
           );
           dispatch(updateMessage(''));
-          dispatch(incrementMessages());
+          const userMessages = messages.filter((msg) => msg.user);
+          if (
+            userMessages.length > 0 &&
+            message.trim() !== userMessages[userMessages.length - 1].text.trim()
+          ) {
+            dispatch(incrementMessages());
+          }
         } catch (error) {
           dispatch(isErrorConnection());
           dispatch(setErrorMessage('Перезагрузите страницу'));
