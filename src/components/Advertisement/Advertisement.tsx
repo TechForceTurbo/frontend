@@ -10,28 +10,16 @@ const Advertisement: FC = () => {
           <Image
             src="/images/Artboard-52.webp"
             alt="пленки"
-            width={100}
-            height={100}
-            layout="responsive"
+            width={800}
+            height={600}
+            priority={true}
           />
         </div>
         <div className={styles.smallImage}>
-          <Image
-            src="/images/dippa_gw1.webp"
-            alt="чернила"
-            width={100}
-            height={100}
-            layout="responsive"
-          />
+          <Image src="/images/dippa_gw1.webp" alt="чернила" width={300} height={200} />
         </div>
         <div className={styles.smallImage}>
-          <Image
-            src="/images/smchemi1.webp"
-            alt="скотч"
-            width={100}
-            height={100}
-            layout="responsive"
-          />
+          <Image src="/images/smchemi1.webp" alt="скотч" width={300} height={200} />
         </div>
       </div>
     </section>

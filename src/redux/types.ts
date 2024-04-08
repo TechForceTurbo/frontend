@@ -9,6 +9,9 @@ export interface RootState {
   dialog: {
     isOpen: boolean
   }
+  feedbackForm: {
+    isOpen: boolean
+  }
   message: {
     message: string
   }

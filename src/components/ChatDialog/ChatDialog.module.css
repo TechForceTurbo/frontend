@@ -3,7 +3,7 @@
   padding: 10px;
 
   min-height: 400px;
-  min-width: 250px;
+  min-width: 255px;
   max-height: 70dvh;
   max-width: 80dvw;
 
@@ -47,17 +47,17 @@
   height: 1px;
   background: black;
   position: absolute;
-  transform: rotate(-45deg);
+  rotate: -45deg;
+  transition: transform 0.2s ease;
 }
 
 .closeButton:after {
-  transform: rotate(45deg);
+  rotate: 45deg;
 }
 
 .closeButton:hover:before,
 .closeButton:hover:after {
-  width: 110%;
-  right: -2px;
+  transform: scale(1.1);
 }
 
 .resizeButton {

@@ -5,6 +5,7 @@ import { RootState } from '@/redux/types';
 import { closeDialog } from '@/redux/reducers/dialogSlice';
 import Messages from '../Messages/Messages';
 import Form from '../Form/Form';
+import { closeFeedbackForm } from '@/redux/reducers/feedbackFormSlice';
 
 const ChatDialog: React.FC = () => {
   const isOpen: boolean = useSelector((state: RootState) => state.dialog.isOpen);
@@ -55,6 +56,7 @@ const ChatDialog: React.FC = () => {
   };
   const handleCloseDialog = useCallback((): void => {
     dispatch(closeDialog());
+    dispatch(closeFeedbackForm());
   }, [dispatch]);
 
   useEffect(() => {

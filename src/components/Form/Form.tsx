@@ -8,11 +8,12 @@ import { addMessage } from '@/redux/reducers/setMessagesSlice';
 import { RootState } from '@/redux/types';
 import useWebSocket from '@/hooks/useWebSocket';
 import { isErrorConnection, setErrorMessage } from '@/redux/reducers/isErrorConnectionSlice';
-import { incrementMessages } from '@/redux/reducers/unansweredMessagesSlice';
+import { decrementMessages, incrementMessages } from '@/redux/reducers/unansweredMessagesSlice';
 
 const Form: FC = () => {
   const message = useSelector((state: RootState) => state.message.message);
   const isError = useSelector((state: RootState) => state.isErrorConnection.isError);
+  const messages = useSelector((state: RootState) => state.setMessages?.items);
   const dispatch = useDispatch();
   const socketRef = useWebSocket('wss://vink.ragimov700.ru/ws/chat/');
 
@@ -26,12 +27,14 @@ const Form: FC = () => {
     e.preventDefault();
     if (!isError) {
       if (message.trim() !== '') {
-        try {
-          await socketRef?.send(JSON.stringify({ message }));
+        const userMessages = messages.filter((msg) => msg.user);
+        if (
+          userMessages.length > 0 &&
+          message.trim() === userMessages[userMessages.length - 1].text.trim()
+        ) {
           const currentTime = new Date();
           const hours = currentTime.getHours();
           const minutes = currentTime.getMinutes().toString().padStart(2, '0');
-
           dispatch(
             addMessage({
               user: true,
@@ -42,9 +45,37 @@ const Form: FC = () => {
           );
           dispatch(updateMessage(''));
           dispatch(incrementMessages());
-        } catch (error) {
-          dispatch(isErrorConnection());
-          dispatch(setErrorMessage('Перезагрузите страницу'));
+
+          setTimeout(() => {
+            dispatch(
+              addMessage({
+                user: false,
+                text: 'Нельзя отправлять идентичные сообщения подряд.',
+                time: `${hours}:${minutes}`,
+              }),
+            );
+            dispatch(decrementMessages());
+          }, 1000);
+        } else {
+          try {
+            await socketRef?.send(JSON.stringify({ message }));
+            const currentTime = new Date();
+            const hours = currentTime.getHours();
+            const minutes = currentTime.getMinutes().toString().padStart(2, '0');
+            dispatch(
+              addMessage({
+                user: true,
+                text: message,
+                time: `${hours}:${minutes}`,
+                isDelivered: true,
+              }),
+            );
+            dispatch(updateMessage(''));
+            dispatch(incrementMessages());
+          } catch (error) {
+            dispatch(isErrorConnection());
+            dispatch(setErrorMessage('Перезагрузите страницу'));
+          }
         }
       }
     }

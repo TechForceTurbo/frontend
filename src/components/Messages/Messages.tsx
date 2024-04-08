@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState, useCallback } from 'react';
 import MessageElement from '../MessageElement/MessageElement';
 import styles from './Messages.module.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,6 +7,7 @@ import Hints from '../Hints/Hints';
 import getHistoryMessages, { getPreviousMessages } from '@/utils/getHistoryMessages';
 import { addMessagesFromHistory, clearSetMessages } from '@/redux/reducers/setMessagesSlice';
 import TypingInformation from '../TypingInformation/TypingInformation';
+import FormForFeedback from '../FormForFeedback/FormForFeedback';
 import { selectUnansweredMessageCount } from '@/redux/reducers/unansweredMessagesSlice';
 
 const Messages: FC = () => {
@@ -15,20 +16,27 @@ const Messages: FC = () => {
   const messages = useSelector((state: RootState) => state.setMessages?.items);
   const isError = useSelector((state: RootState) => state.isErrorConnection.isError);
   const textError = useSelector((state: RootState) => state.isErrorConnection.errorMessage);
+  const isOpenFeedbackForm = useSelector((state: RootState) => state.feedbackForm.isOpen);
   const unansweredMessageCount = useSelector(selectUnansweredMessageCount);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesStartRef = useRef<HTMLDivElement>(null);
+  const feedbackFormRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
 
-  const handleReceivedMessagesData = (data: any) => {
-    dispatch(addMessagesFromHistory(data.results));
-    if (data.next.includes('http://')) {
-      data.next = data.next.replace('http://', 'https://');
-    }
-    setNextPageLink(data.next);
-  };
+  const handleReceivedMessagesData = useCallback(
+    (data: any) => {
+      dispatch(addMessagesFromHistory(data.results));
+      if (data.next !== null) {
+        if (data.next.includes('http://')) {
+          data.next = data.next.replace('http://', 'https://');
+        }
+      }
+      setNextPageLink(data.next);
+    },
+    [dispatch],
+  );
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     if (messagesStartRef.current?.scrollTop === 0 && nextPageLink !== null) {
       getPreviousMessages(nextPageLink)
         .then(handleReceivedMessagesData)
@@ -36,7 +44,7 @@ const Messages: FC = () => {
           console.error(error.message);
         });
     }
-  };
+  }, [nextPageLink, handleReceivedMessagesData]);
 
   useEffect(() => {
     getHistoryMessages()
@@ -48,7 +56,7 @@ const Messages: FC = () => {
     return () => {
       dispatch(clearSetMessages());
     };
-  }, [dispatch]);
+  }, [dispatch, handleReceivedMessagesData]);
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -57,16 +65,21 @@ const Messages: FC = () => {
   }, [messages]);
 
   useEffect(() => {
-    if (messagesStartRef.current) {
-      messagesStartRef.current.addEventListener('scroll', handleScroll);
+    if (isOpenFeedbackForm) {
+      feedbackFormRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
+  }, [isOpenFeedbackForm]);
 
-    return () => {
-      if (messagesStartRef.current) {
-        messagesStartRef.current.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, [nextPageLink]);
+  useEffect(() => {
+    const currentRef = messagesStartRef.current;
+    if (currentRef) {
+      currentRef.addEventListener('scroll', handleScroll);
+
+      return () => {
+        currentRef.removeEventListener('scroll', handleScroll);
+      };
+    }
+  }, [handleScroll]);
 
   return (
     <div className={styles.box} ref={messagesStartRef}>
@@ -90,6 +103,12 @@ const Messages: FC = () => {
       )}
       {unansweredMessageCount !== 0 && <TypingInformation />}
       <div ref={messagesEndRef} />
+      {isOpenFeedbackForm && (
+        <>
+          <FormForFeedback />
+          <div ref={feedbackFormRef} />
+        </>
+      )}
     </div>
   );
 };
