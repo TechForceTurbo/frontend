@@ -5,7 +5,7 @@ async function getHistoryMessages(): Promise<any> {
     return;
   }
 
-  const url = `https://vink.ddns.net/api/chat-history/${session_id}`;
+  const url = `https://vink.ragimov700.ru/api/chat-history/${session_id}`;
 
   try {
     const response = await fetch(url);
@@ -17,6 +17,21 @@ async function getHistoryMessages(): Promise<any> {
     const data = await response.json();
     console.log('history component, История чата:', data);
 
+    return data;
+  } catch (error) {
+    console.error('history component, Произошла ошибка:', (error as Error).message);
+    throw error;
+  }
+}
+
+export async function getPreviousMessages(url: string): Promise<any> {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('Ошибка получения истории чата');
+    }
+    const data = await response.json();
+    console.log('history component, Получены предыдущие компоненты:', data);
     return data;
   } catch (error) {
     console.error('history component, Произошла ошибка:', (error as Error).message);

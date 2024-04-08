@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { FC, MouseEvent } from 'react';
 import styles from './Hints.module.css';
 import { useDispatch } from 'react-redux';
 import { updateMessage } from '@/redux/reducers/messageSlice';
 
-const Hints: React.FC = () => {
+const Hints: FC = () => {
   const dispatch = useDispatch();
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
+  const handleClick = (e: MouseEvent<HTMLButtonElement>): void => {
     const buttonText = (e.target as HTMLButtonElement).textContent;
     if (buttonText !== null) {
       dispatch(updateMessage(buttonText));

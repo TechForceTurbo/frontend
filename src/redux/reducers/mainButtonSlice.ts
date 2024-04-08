@@ -12,7 +12,7 @@ const mainButtonSlice = createSlice({
   name: 'mainButton',
   initialState,
   reducers: {
-    mainButton: (state: MainButtonState) => {
+    mainButton: (state) => {
       state.isActive = !state.isActive;
     },
   },

@@ -1,19 +1,21 @@
 import { configureStore } from '@reduxjs/toolkit';
-import mainButtonSlice from './reducers/mainButtonSlice';
-import dialogSlice from './reducers/dialogSlice';
-import messageSlice from './reducers/messageSlice';
-import filesSlice from './reducers/filesSlice';
-import setMessagesSlice from './reducers/setMessagesSlice';
-import isErrorConnectionSlice from './reducers/isErrorConnectionSlice';
+import mainButtonReducer from './reducers/mainButtonSlice';
+import dialogReducer from './reducers/dialogSlice';
+import messageReducer from './reducers/messageSlice';
+import filesReducer from './reducers/filesSlice';
+import setMessagesReducer from './reducers/setMessagesSlice';
+import isErrorConnectionReducer from './reducers/isErrorConnectionSlice';
+import unansweredMessagesReducer from './reducers/unansweredMessagesSlice';
 
 const store = configureStore({
   reducer: {
-    dialog: dialogSlice,
-    mainButton: mainButtonSlice,
-    message: messageSlice,
-    files: filesSlice,
-    setMessages: setMessagesSlice,
-    isErrorConnection: isErrorConnectionSlice,
+    dialog: dialogReducer,
+    mainButton: mainButtonReducer,
+    message: messageReducer,
+    files: filesReducer,
+    setMessages: setMessagesReducer,
+    isErrorConnection: isErrorConnectionReducer,
+    unansweredMessages: unansweredMessagesReducer,
   },
 });
 

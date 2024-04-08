@@ -1,4 +1,4 @@
-export type RootState = {
+export interface RootState {
   mainButton: {
     isActive: boolean
   }
@@ -20,6 +20,7 @@ export type RootState = {
       user: boolean
       text: string
       time: string
+      isDelivered?: boolean
     }[]
   }
 }
