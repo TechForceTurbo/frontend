@@ -1,0 +1,45 @@
+.box {
+  display: flex;
+  gap: 5px;
+  position: absolute;
+  right: 10px;
+  background-color: burlywood;
+  border-radius: 10px;
+  padding: 2px 4px;
+  filter: drop-shadow(0 0 0.5rem rgba(0, 0, 0, 0.15));
+}
+
+.question {
+  font-size: 10px;
+  font-weight: 300;
+}
+
+.likeButton,
+.dislikeButton {
+  border: none;
+  background-image: url('../../../public/images/like.svg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 10px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  transition: rotate 0.2s ease;
+  opacity: 0.5;
+}
+
+.dislikeButton {
+  background-image: url('../../../public/images/dislike.svg');
+}
+
+.dislikeButton:hover,
+.likeButton:hover {
+  transform: scale(1.1);
+}
+
+.active {
+  transform: scale(1.15);
+  rotate: 45deg;
+  opacity: 0.7;
+}

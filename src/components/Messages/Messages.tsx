@@ -8,6 +8,7 @@ import getHistoryMessages, { getPreviousMessages } from '@/utils/getHistoryMessa
 import { addMessagesFromHistory, clearSetMessages } from '@/redux/reducers/setMessagesSlice';
 import TypingInformation from '../TypingInformation/TypingInformation';
 import { selectUnansweredMessageCount } from '@/redux/reducers/unansweredMessagesSlice';
+import FormForFeedback from '../FormForFeedback/FormForFeedback';
 
 const Messages: FC = () => {
   const [nextPageLink, setNextPageLink] = useState<string | null>(null);
@@ -15,9 +16,11 @@ const Messages: FC = () => {
   const messages = useSelector((state: RootState) => state.setMessages?.items);
   const isError = useSelector((state: RootState) => state.isErrorConnection.isError);
   const textError = useSelector((state: RootState) => state.isErrorConnection.errorMessage);
+  const isOpenFeedbackForm = useSelector((state: RootState) => state.feedbackForm.isOpen);
   const unansweredMessageCount = useSelector(selectUnansweredMessageCount);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesStartRef = useRef<HTMLDivElement>(null);
+  const feedbackFormRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
 
   const handleReceivedMessagesData = (data: any) => {
@@ -57,6 +60,12 @@ const Messages: FC = () => {
   }, [messages]);
 
   useEffect(() => {
+    if (isOpenFeedbackForm) {
+      feedbackFormRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [isOpenFeedbackForm]);
+
+  useEffect(() => {
     if (messagesStartRef.current) {
       messagesStartRef.current.addEventListener('scroll', handleScroll);
     }
@@ -90,6 +99,12 @@ const Messages: FC = () => {
       )}
       {unansweredMessageCount !== 0 && <TypingInformation />}
       <div ref={messagesEndRef} />
+      {isOpenFeedbackForm && (
+        <>
+          <FormForFeedback />
+          <div ref={feedbackFormRef} />
+        </>
+      )}
     </div>
   );
 };

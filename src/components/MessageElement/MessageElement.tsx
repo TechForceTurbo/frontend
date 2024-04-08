@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import styles from './MessageElement.module.css';
+import FeedbackButtons from '../FeedbackButtons/FeedbackButtons';
 
 interface MessageProps {
   user: boolean
@@ -18,6 +19,7 @@ const MessageElement: FC<MessageProps> = ({ user, text, time, isDelivered }) => 
           <p className={`${styles.text} ${user ? styles.usersText : ''}`}>{text}</p>
         </div>
         <p className={styles.time}>{time}</p>
+        {!user && <FeedbackButtons />}
       </div>
       {user && <p className={styles.confirmation}>{isDelivered ? 'Доставлено' : ''}</p>}
     </>
