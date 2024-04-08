@@ -23,7 +23,6 @@ const messagesSlice = createSlice({
   initialState,
   reducers: {
     addMessage: (state, action: PayloadAction<Message>) => {
-      console.log(action.payload);
       state.items.push(action.payload);
     },
     addMessagesFromHistory: (state, action: PayloadAction<Message[]>) => {

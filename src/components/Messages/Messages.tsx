@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState, useCallback } from 'react';
 import MessageElement from '../MessageElement/MessageElement';
 import styles from './Messages.module.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,8 +7,8 @@ import Hints from '../Hints/Hints';
 import getHistoryMessages, { getPreviousMessages } from '@/utils/getHistoryMessages';
 import { addMessagesFromHistory, clearSetMessages } from '@/redux/reducers/setMessagesSlice';
 import TypingInformation from '../TypingInformation/TypingInformation';
-import { selectUnansweredMessageCount } from '@/redux/reducers/unansweredMessagesSlice';
 import FormForFeedback from '../FormForFeedback/FormForFeedback';
+import { selectUnansweredMessageCount } from '@/redux/reducers/unansweredMessagesSlice';
 
 const Messages: FC = () => {
   const [nextPageLink, setNextPageLink] = useState<string | null>(null);
@@ -23,15 +23,18 @@ const Messages: FC = () => {
   const feedbackFormRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
 
-  const handleReceivedMessagesData = (data: any) => {
-    dispatch(addMessagesFromHistory(data.results));
-    if (data.next.includes('http://')) {
-      data.next = data.next.replace('http://', 'https://');
-    }
-    setNextPageLink(data.next);
-  };
+  const handleReceivedMessagesData = useCallback(
+    (data: any) => {
+      dispatch(addMessagesFromHistory(data.results));
+      if (data.next.includes('http://')) {
+        data.next = data.next.replace('http://', 'https://');
+      }
+      setNextPageLink(data.next);
+    },
+    [dispatch],
+  );
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     if (messagesStartRef.current?.scrollTop === 0 && nextPageLink !== null) {
       getPreviousMessages(nextPageLink)
         .then(handleReceivedMessagesData)
@@ -39,7 +42,7 @@ const Messages: FC = () => {
           console.error(error.message);
         });
     }
-  };
+  }, [nextPageLink, handleReceivedMessagesData]);
 
   useEffect(() => {
     getHistoryMessages()
@@ -51,7 +54,7 @@ const Messages: FC = () => {
     return () => {
       dispatch(clearSetMessages());
     };
-  }, [dispatch]);
+  }, [dispatch, handleReceivedMessagesData]);
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -66,16 +69,15 @@ const Messages: FC = () => {
   }, [isOpenFeedbackForm]);
 
   useEffect(() => {
-    if (messagesStartRef.current) {
-      messagesStartRef.current.addEventListener('scroll', handleScroll);
-    }
+    const currentRef = messagesStartRef.current;
+    if (currentRef) {
+      currentRef.addEventListener('scroll', handleScroll);
 
-    return () => {
-      if (messagesStartRef.current) {
-        messagesStartRef.current.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, [nextPageLink]);
+      return () => {
+        currentRef.removeEventListener('scroll', handleScroll);
+      };
+    }
+  }, [handleScroll]);
 
   return (
     <div className={styles.box} ref={messagesStartRef}>

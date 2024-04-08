@@ -15,7 +15,6 @@ async function getHistoryMessages(): Promise<any> {
     }
 
     const data = await response.json();
-    console.log('history component, История чата:', data);
 
     return data;
   } catch (error) {
@@ -31,7 +30,6 @@ export async function getPreviousMessages(url: string): Promise<any> {
       throw new Error('Ошибка получения истории чата');
     }
     const data = await response.json();
-    console.log('history component, Получены предыдущие компоненты:', data);
     return data;
   } catch (error) {
     console.error('history component, Произошла ошибка:', (error as Error).message);

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import styles from './FormForFeedback.module.css';
-import MaskedInput from 'react-text-mask';
-import phoneMask from '@/utils/phoneMask';
 import { useDispatch } from 'react-redux';
 import { closeFeedbackForm } from '@/redux/reducers/feedbackFormSlice';
+import { sendFormData } from '@/utils/sendFormData';
 
 const FormForFeedback: React.FC = () => {
   const [isChecked, setIsChecked] = useState(false);
@@ -17,8 +16,17 @@ const FormForFeedback: React.FC = () => {
     if (!isChecked) {
       return;
     }
-
-    // console.log('Форма отправлена!');
+    const session_id = localStorage.getItem('session_id');
+    const data = {
+      name,
+      phone,
+      session_uuid: session_id,
+    };
+    sendFormData(data)
+      .then()
+      .catch((error) => {
+        console.log(error);
+      });
 
     setFormSubmitted(true);
     setTimeout(() => {
@@ -35,7 +43,11 @@ const FormForFeedback: React.FC = () => {
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhone(e.target.value);
+    const input = e.target.value;
+    const pattern = /^[+]{0,1}[0-9]*$/;
+    if (input === '' || pattern.test(input)) {
+      setPhone(input);
+    }
   };
 
   return (
@@ -62,14 +74,15 @@ const FormForFeedback: React.FC = () => {
         minLength={2}
         className={styles.input}
       />
-      <MaskedInput
-        mask={phoneMask}
-        guide={false}
+      <input
+        type="tel"
         placeholder="Введите ваш телефон"
         value={phone}
         onChange={handlePhoneChange}
         required
         className={styles.input}
+        maxLength={15}
+        minLength={2}
       />
       <label className={styles.label}>
         <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} required />

@@ -19,13 +19,11 @@ const useWebSocket = (url: string): WebSocket | null => {
 
     socketRef.current.onopen = () => {
       dispatch(isNotErrorConnection());
-      console.log('Соединение websocket установлено');
     };
 
     socketRef.current.onmessage = (event) => {
       try {
         const res = JSON.parse(event.data);
-        console.log('websocket hook', res);
 
         if (res.session_id) {
           localStorage.setItem('session_id', res.session_id);
