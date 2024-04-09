@@ -55,7 +55,4 @@ npm run build
 npm run start
 ```
 
-# Архив со скриншотами
-
-[Ссылка на архив со скриншотами](https://disk.yandex.ru/d/a3m67vStPBrJzg)
-
+### [Архив со скриншотами](https://disk.yandex.ru/d/TUR1puFm4leyYQ)
