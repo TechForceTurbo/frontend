@@ -1,0 +1,62 @@
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.button {
+  margin: 20px;
+  height: 60px;
+  width: 60px;
+  text-align: center;
+  border-radius: 50%;
+  cursor: pointer;
+  position: fixed;
+  right: 5%;
+  bottom: 7%;
+  background-color: #ffd132;
+  border: none;
+  transition: transform 0.3s ease;
+  background-image: url('../../../public/images/bubbles.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 40px;
+  filter: drop-shadow(0 0 0.75rem rgba(252, 231, 157, 0.9));
+  z-index: 10;
+}
+
+.active {
+  background-color: #d6d6d6;
+  transform: rotate(45deg);
+  background-image: none;
+  filter: none;
+}
+
+.backPulse {
+  background-color: rgba(255, 211, 50, 0.2);
+  height: 100%;
+  width: 100%;
+  animation: pulse 2s infinite;
+  border-radius: 50%;
+}
+
+.active.button:before,
+.active.button:after {
+  content: '';
+  width: 50%;
+  height: 2px;
+  background: black;
+  position: absolute;
+  top: 48%;
+  left: 25%;
+  transform: rotate(90deg);
+}
+.active.button:after {
+  transform: rotate(180deg);
+}

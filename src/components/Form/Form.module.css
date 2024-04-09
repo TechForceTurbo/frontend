@@ -1,0 +1,64 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: auto;
+}
+
+.area {
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 5px;
+  border: 2px solid #ccc;
+  box-sizing: border-box;
+  max-height: 130px;
+  min-height: 40px;
+  font-weight: 300;
+  resize: vertical;
+}
+
+.area::placeholder {
+  color: #aaa;
+}
+
+.area:hover {
+  border-color: #999;
+}
+
+.bottomButtonsBox {
+  display: flex;
+}
+
+.sendButton {
+  padding: 10px;
+  border-radius: 5px;
+  /* margin-left: 15px; */
+  width: 100%;
+  border: none;
+  background-color: rgba(184, 135, 11, 0.8);
+  color: rgb(245, 245, 245);
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+
+.sendButton:hover {
+  filter: drop-shadow(0 0 0.5rem rgba(0, 0, 0, 0.15));
+}
+
+.sendButton:active {
+  position: relative;
+  top: 3px;
+}
+
+.inActiveButton {
+  background-color: #aaa;
+}
+
+.inActiveButton:active {
+  position: relative;
+  top: 0px;
+}
+
+.inActiveButton:hover {
+  filter: none;
+}

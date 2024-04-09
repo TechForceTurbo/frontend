@@ -1,0 +1,6 @@
+.footer {
+  background-image: url('../../../public/images/bg.svg');
+  min-height: 30dvh;
+  background-color: #37383a;
+  background-position: center;
+}

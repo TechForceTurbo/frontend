@@ -1,0 +1,120 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgb(250, 235, 179, 0.98);
+  margin: 10px auto;
+  gap: 5px;
+  position: relative;
+}
+
+.title {
+  text-align: center;
+  font-size: 16px;
+  width: 90%;
+  margin: 0 auto;
+  text-wrap: balance;
+  word-wrap: break-word;
+  margin-bottom: 5px;
+}
+
+.input {
+  padding: 5px;
+  margin: 0 10px;
+  border-radius: 5px;
+  border: none;
+}
+
+.label {
+  width: 85%;
+  margin: 5px auto;
+  font-size: 12px;
+  display: flex;
+  gap: 5px;
+  align-items: start;
+}
+
+.button {
+  width: 90%;
+  margin: 0 auto;
+  padding: 4px;
+  border: none;
+  background-color: rgba(184, 135, 11, 0.8);
+  color: rgb(245, 245, 245);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.3s ease; /* Плавная анимация изменения прозрачности */
+}
+
+.button:hover {
+  filter: drop-shadow(0 0 0.5rem rgba(0, 0, 0, 0.15));
+}
+
+.button:active {
+  position: relative;
+  top: 3px;
+}
+
+.inActiveButton {
+  background-color: #aaa;
+}
+
+.inActiveButton:active {
+  position: relative;
+  top: 0px;
+}
+
+.inActiveButton:hover {
+  filter: none;
+}
+
+.closeButton {
+  width: 15px;
+  height: 15px;
+  border: none;
+  position: absolute;
+  background: none;
+  cursor: pointer;
+  display: block;
+  right: 10px;
+}
+
+.closeButton:before,
+.closeButton:after {
+  content: '';
+  width: 100%;
+  right: 0px;
+  bottom: 10px;
+  height: 1px;
+  background: black;
+  position: absolute;
+  rotate: -45deg;
+  transition: transform 0.2s ease;
+}
+
+.closeButton:after {
+  rotate: 45deg;
+}
+
+.closeButton:hover:before,
+.closeButton:hover:after {
+  transform: scale(1.1);
+}
+
+.successIcon {
+  color: green;
+  font-size: 14px;
+  margin-top: 5px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.formSubmitted .button {
+  opacity: 0;
+}
+
+.formSubmitted .successIcon {
+  opacity: 1;
+}

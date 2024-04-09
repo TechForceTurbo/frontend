@@ -1,0 +1,81 @@
+.dialog {
+  margin: 20px;
+  padding: 10px;
+
+  min-height: 400px;
+  min-width: 255px;
+  max-height: 70dvh;
+  max-width: 80dvw;
+
+  height: 60dvh;
+  width: 50dvw;
+
+  display: flex;
+  flex-direction: column;
+  border: none;
+  filter: drop-shadow(0 0 0.75rem rgba(0, 0, 0, 0.15));
+  border-radius: 10px;
+  position: fixed;
+  bottom: 18%;
+  right: 5%;
+  z-index: 20;
+  background-color: rgb(250, 235, 179, 0.98);
+}
+
+.topButtonsBox {
+  display: flex;
+}
+
+.closeButton {
+  width: 30px;
+  height: 30px;
+  margin-left: auto;
+  border: none;
+  margin-bottom: 10px;
+  position: relative;
+  background: none;
+  cursor: pointer;
+  display: block;
+}
+
+.closeButton:before,
+.closeButton:after {
+  content: '';
+  width: 100%;
+  right: 0px;
+  bottom: 14px;
+  height: 1px;
+  background: black;
+  position: absolute;
+  rotate: -45deg;
+  transition: transform 0.2s ease;
+}
+
+.closeButton:after {
+  rotate: 45deg;
+}
+
+.closeButton:hover:before,
+.closeButton:hover:after {
+  transform: scale(1.1);
+}
+
+.resizeButton {
+  width: 15px;
+  height: 15px;
+  display: block;
+  border: none;
+  margin-top: 3px;
+  margin-bottom: 10px;
+  background: none;
+  background-image: url('../../../public/images/resize.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: move;
+  opacity: 0.3;
+  transform: rotate(45deg);
+}
+
+.resizeButton:hover {
+  opacity: 0.6;
+}
