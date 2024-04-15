@@ -24,7 +24,7 @@ const FormForFeedback: React.FC = () => {
     };
     sendFormData(data)
       .then()
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
 

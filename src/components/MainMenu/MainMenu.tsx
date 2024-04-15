@@ -14,7 +14,7 @@ const MainMenu: FC = () => {
     dispatch(mainButton());
   };
 
-  const handlePopupClick: React.MouseEventHandler<HTMLUListElement> = (e) => {
+  const handlePopupClick: React.MouseEventHandler<HTMLUListElement> = e => {
     e.stopPropagation();
   };
 

@@ -1,17 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface Message {
-  user: boolean
-  text: string
-  time: string
-  is_user_message?: boolean
-  message?: string
-  created_at?: string
-  isDelivered?: boolean
+  user: boolean;
+  text: string;
+  time: string;
+  is_user_message?: boolean;
+  message?: string;
+  created_at?: string;
+  isDelivered?: boolean;
 }
 
 interface MessagesState {
-  items: Message[]
+  items: Message[];
 }
 
 const initialState: MessagesState = {
@@ -26,7 +26,7 @@ const messagesSlice = createSlice({
       state.items.push(action.payload);
     },
     addMessagesFromHistory: (state, action: PayloadAction<Message[]>) => {
-      action.payload.forEach((messageFromServer) => {
+      action.payload.forEach(messageFromServer => {
         const createdAt = new Date(messageFromServer.created_at || '');
         const formattedTime = `${createdAt.getHours().toString().padStart(2, '0')}:
         ${createdAt.getMinutes().toString().padStart(2, '0')}`;
@@ -45,7 +45,7 @@ const messagesSlice = createSlice({
       });
     },
 
-    clearSetMessages: (state) => {
+    clearSetMessages: state => {
       state.items = [];
     },
   },

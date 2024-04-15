@@ -84,7 +84,7 @@ const Messages: FC = () => {
   return (
     <div className={styles.box} ref={messagesStartRef}>
       {messages !== undefined && messages.length > 0 ? (
-        messages.map((message) => (
+        messages.map(message => (
           <MessageElement
             key={Math.random()}
             user={message.user}

@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './TypingInformation.module.css'; // Подключаем стили для анимации
+import styles from './TypingInformation.module.css';
 
 const TypingInformation: React.FC = () => {
   return (

@@ -3,6 +3,7 @@ import styles from './AttachmentFilesButton.module.css';
 import { useDispatch } from 'react-redux';
 import { setSelectedFiles } from '@/redux/reducers/filesSlice';
 import { addMessage } from '@/redux/reducers/setMessagesSlice';
+import getCurrentTime from '@/utils/getCurrentTime';
 
 const AttachmentFilesButton: React.FC = () => {
   const dispatch = useDispatch();
@@ -11,14 +12,12 @@ const AttachmentFilesButton: React.FC = () => {
     const files = event.target.files;
     if (!files) return;
 
-    const fileNames: string[] = Array.from(files).map((file) => file.name);
+    const fileNames: string[] = Array.from(files).map(file => file.name);
     dispatch(setSelectedFiles(fileNames));
 
-    const currentTime = new Date();
-    const hours = currentTime.getHours();
-    const minutes = currentTime.getMinutes().toString().padStart(2, '0');
+    const { hours, minutes } = getCurrentTime();
 
-    fileNames.forEach((file) => {
+    fileNames.forEach(file => {
       dispatch(addMessage({ user: true, text: file, time: `${hours}:${minutes}` }));
     });
 

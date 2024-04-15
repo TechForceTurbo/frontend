@@ -1,29 +1,29 @@
 export interface RootState {
   mainButton: {
-    isActive: boolean
-  }
+    isActive: boolean;
+  };
   isErrorConnection: {
-    isError: boolean
-    errorMessage: string
-  }
+    isError: boolean;
+    errorMessage: string;
+  };
   dialog: {
-    isOpen: boolean
-  }
+    isOpen: boolean;
+  };
   feedbackForm: {
-    isOpen: boolean
-  }
+    isOpen: boolean;
+  };
   message: {
-    message: string
-  }
+    message: string;
+  };
   files: {
-    selectedFiles: FileList | undefined
-  }
+    selectedFiles: FileList | undefined;
+  };
   setMessages: {
     items: {
-      user: boolean
-      text: string
-      time: string
-      isDelivered?: boolean
-    }[]
-  }
+      user: boolean;
+      text: string;
+      time: string;
+      isDelivered?: boolean;
+    }[];
+  };
 }

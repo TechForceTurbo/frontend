@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface FileState {
-  selectedFiles: string[]
+  selectedFiles: string[];
 }
 
 const initialState: FileState = {
@@ -15,7 +15,7 @@ const fileSlice = createSlice({
     setSelectedFiles: (state, action: PayloadAction<string[]>) => {
       state.selectedFiles = action.payload;
     },
-    clearSelectedFiles: (state) => {
+    clearSelectedFiles: state => {
       state.selectedFiles = [];
     },
   },

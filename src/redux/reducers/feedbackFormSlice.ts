@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface FeedbackFormState {
-  isOpen: boolean
+  isOpen: boolean;
 }
 
 const initialState: FeedbackFormState = {

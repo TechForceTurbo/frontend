@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 interface MessageState {
-  message: string
+  message: string;
 }
 
 const initialState: MessageState = {

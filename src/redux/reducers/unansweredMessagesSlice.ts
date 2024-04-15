@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface UnansweredMessagesState {
-  count: number
+  count: number;
 }
 
 const initialState: UnansweredMessagesState = {
@@ -12,13 +12,13 @@ const unansweredMessagesSlice = createSlice({
   name: 'unansweredMessages',
   initialState,
   reducers: {
-    incrementMessages: (state) => {
+    incrementMessages: state => {
       state.count++;
     },
-    decrementMessages: (state) => {
+    decrementMessages: state => {
       state.count--;
     },
-    resetMessages: (state) => {
+    resetMessages: state => {
       state.count = 0;
     },
   },
@@ -28,7 +28,7 @@ export const { incrementMessages, decrementMessages, resetMessages } =
   unansweredMessagesSlice.actions;
 
 export const selectUnansweredMessageCount = (state: {
-  unansweredMessages: UnansweredMessagesState
+  unansweredMessages: UnansweredMessagesState;
 }) => state.unansweredMessages.count;
 
 export default unansweredMessagesSlice.reducer;
