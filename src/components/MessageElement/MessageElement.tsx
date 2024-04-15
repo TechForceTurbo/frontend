@@ -3,10 +3,10 @@ import styles from './MessageElement.module.css';
 import FeedbackButtons from '../FeedbackButtons/FeedbackButtons';
 
 interface MessageProps {
-  user: boolean
-  text: string
-  time: string
-  isDelivered?: boolean
+  user: boolean;
+  text: string;
+  time: string;
+  isDelivered?: boolean;
 }
 
 const MessageElement: FC<MessageProps> = ({ user, text, time, isDelivered }) => {

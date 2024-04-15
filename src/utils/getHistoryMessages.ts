@@ -1,3 +1,5 @@
+import { GET_HISTORY_URL } from './constant';
+
 async function getHistoryMessages(): Promise<any> {
   const session_id = localStorage.getItem('session_id');
   if (!session_id) {
@@ -5,7 +7,7 @@ async function getHistoryMessages(): Promise<any> {
     return;
   }
 
-  const url = `https://vink.ragimov700.ru/api/chat-history/${session_id}`;
+  const url = `${GET_HISTORY_URL}${session_id}`;
 
   try {
     const response = await fetch(url);

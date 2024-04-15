@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface MainButtonState {
-  isActive: boolean
+  isActive: boolean;
 }
 
 const initialState: MainButtonState = {
@@ -12,7 +12,7 @@ const mainButtonSlice = createSlice({
   name: 'mainButton',
   initialState,
   reducers: {
-    mainButton: (state) => {
+    mainButton: state => {
       state.isActive = !state.isActive;
     },
   },

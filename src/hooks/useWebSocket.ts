@@ -7,6 +7,7 @@ import {
   setErrorMessage,
 } from '@/redux/reducers/isErrorConnectionSlice';
 import { decrementMessages, resetMessages } from '@/redux/reducers/unansweredMessagesSlice';
+import getCurrentTime from '@/utils/getCurrentTime';
 
 const useWebSocket = (url: string): WebSocket | null => {
   const socketRef = useRef<WebSocket | null>(null);
@@ -21,7 +22,7 @@ const useWebSocket = (url: string): WebSocket | null => {
       dispatch(isNotErrorConnection());
     };
 
-    socketRef.current.onmessage = (event) => {
+    socketRef.current.onmessage = event => {
       try {
         const res = JSON.parse(event.data);
 
@@ -29,9 +30,7 @@ const useWebSocket = (url: string): WebSocket | null => {
           localStorage.setItem('session_id', res.session_id);
         }
         if (res.message) {
-          const currentTime = new Date();
-          const hours = currentTime.getHours();
-          const minutes = currentTime.getMinutes().toString().padStart(2, '0');
+          const { hours, minutes } = getCurrentTime();
           dispatch(
             addMessage({
               user: false,
@@ -46,13 +45,13 @@ const useWebSocket = (url: string): WebSocket | null => {
       }
     };
 
-    socketRef.current.onerror = (error) => {
+    socketRef.current.onerror = error => {
       console.error('Websocket component, WebSocket ошибка:', error);
       dispatch(isErrorConnection());
       dispatch(setErrorMessage('Не удалось установить соединение'));
     };
 
-    socketRef.current.onclose = (event) => {
+    socketRef.current.onclose = event => {
       dispatch(isErrorConnection());
       dispatch(setErrorMessage('Соединение прервано'));
       if (event.wasClean) {

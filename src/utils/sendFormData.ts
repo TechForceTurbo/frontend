@@ -1,6 +1,8 @@
+import { SEND_FORM_URL } from './constant';
+
 export const sendFormData = async (formData: any): Promise<any> => {
   try {
-    const response = await fetch('https://vink.ragimov700.ru/api/contact-info/', {
+    const response = await fetch(SEND_FORM_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

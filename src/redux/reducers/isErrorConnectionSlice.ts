@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface IsErrorConnectionState {
-  isError: boolean
-  errorMessage: string
+  isError: boolean;
+  errorMessage: string;
 }
 
 const initialState: IsErrorConnectionState = {
@@ -14,10 +14,10 @@ const isErrorConnectionSlice = createSlice({
   name: 'isErrorConnection',
   initialState,
   reducers: {
-    isErrorConnection: (state) => {
+    isErrorConnection: state => {
       state.isError = true;
     },
-    isNotErrorConnection: (state) => {
+    isNotErrorConnection: state => {
       state.isError = false;
     },
     setErrorMessage: (state, action: PayloadAction<string>) => {

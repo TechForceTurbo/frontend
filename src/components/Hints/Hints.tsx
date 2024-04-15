@@ -2,6 +2,7 @@ import React, { FC, MouseEvent } from 'react';
 import styles from './Hints.module.css';
 import { useDispatch } from 'react-redux';
 import { updateMessage } from '@/redux/reducers/messageSlice';
+import { BUTTON_TEXTS } from '@/utils/constant';
 
 const Hints: FC = () => {
   const dispatch = useDispatch();
@@ -15,38 +16,18 @@ const Hints: FC = () => {
 
   return (
     <ul role="hints" className={styles.hintsList}>
-      <li>
-        <button
-          type="button"
-          onClick={handleClick}
-          aria-label="начать чат с фразы 'Как я могу добраться до вас?'"
-          className={styles.hintButton}
-        >
-          Как я могу добраться до вас?
-        </button>
-      </li>
-
-      <li>
-        <button
-          type="button"
-          onClick={handleClick}
-          aria-label="начать чат с фразы 'Здравствуйте!'"
-          className={styles.hintButton}
-        >
-          Здравствуйте!
-        </button>
-      </li>
-
-      <li>
-        <button
-          type="button"
-          onClick={handleClick}
-          aria-label="начать чат с фразы 'Какой статус моего заказа?'"
-          className={styles.hintButton}
-        >
-          Какой статус моего заказа?
-        </button>
-      </li>
+      {BUTTON_TEXTS.map(text => (
+        <li key={Math.random()}>
+          <button
+            type="button"
+            onClick={handleClick}
+            aria-label={`Начать чат с '${text}'`}
+            className={styles.hintButton}
+          >
+            {text}
+          </button>
+        </li>
+      ))}
     </ul>
   );
 };
